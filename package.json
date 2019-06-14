@@ -1,6 +1,6 @@
 {
   "name": "pizzip",
-  "version": "2.6.1",
+  "version": "3.0.0",
   "author": "Edgar Hipp",
   "description": "Create, read and edit .zip files with Javascript",
   "scripts": {
