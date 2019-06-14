@@ -20,14 +20,14 @@ Each maching folder is an instance of [ZipObject]({{site.baseurl}}/documentation
 __Throws__ : Nothing.
 
 <!--
-__Complexity__ : **O(k)** where k is the number of entries in the current JSZip
+__Complexity__ : **O(k)** where k is the number of entries in the current PizZip
 instance.
 -->
 
 __Example__
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 zip.folder("home/Pierre/videos");
 zip.folder("home/Pierre/photos");
 zip.folder("home/Jean/videos");

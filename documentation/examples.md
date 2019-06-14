@@ -1,44 +1,44 @@
 ---
-title: "How to use JSZip"
+title: "How to use PizZip"
 layout: default
 section: example
 ---
 
-An instance of JSZip represents a set of files. You can add them, remove them,
+An instance of PizZip represents a set of files. You can add them, remove them,
 modify them. You can also import an existing zip file or generate one.
 
 ### Getting the object
 
 #### In a browser
 
-For a browser, there are two interesting files : `dist/jszip.js` and
-`dist/jszip.min.js` (include just one).
+For a browser, there are two interesting files : `dist/pizzip.js` and
+`dist/pizzip.min.js` (include just one).
 
-If you use an AMD loader (RequireJS for example) JSZip will register itself :
+If you use an AMD loader (RequireJS for example) PizZip will register itself :
 you just have to put the js file at the right place, or configure the loader
 (see [here for RequireJS](http://requirejs.org/docs/api.html#config-paths)).
 
-Without any loader, JSZip will declare in the global scope a variable named `JSZip`.
+Without any loader, PizZip will declare in the global scope a variable named `PizZip`.
 
 #### In nodejs
 
 In nodejs, you can `require` it :
 
 ```js
-var JSZip = require("jszip");
+var PizZip = require("pizzip");
 ```
 
 ### Basic manipulations
 
-The first step is to create an instance of JSZip :
+The first step is to create an instance of PizZip :
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 ```
 
 On this instance, we can add (and update) files and folders with
 `.file(name, content)` and `.folder(name)`.
-They return the current JSZip instance so you can chain the calls.
+They return the current PizZip instance so you can chain the calls.
 
 ```js
 // create a file
@@ -68,7 +68,7 @@ You can access the file content with `.file(name)` and
 ```js
 zip.file("hello.txt").asText(); // "Hello World\n"
 
-if (JSZip.support.uint8array) {
+if (PizZip.support.uint8array) {
   zip.file("hello.txt").asUint8Array(); // Uint8Array { 0=72, 1=101, 2=108, more...}
 }
 ```
@@ -91,7 +91,7 @@ informations on how to write / give the file to the user.
 
 ```js
 var content = null;
-if (JSZip.support.uint8array) {
+if (PizZip.support.uint8array) {
   content = zip.generate({type : "uint8array"});
 } else {
   content = zip.generate({type : "string"});
@@ -105,7 +105,7 @@ With `.load(data)` you can load a zip file. Check
 do properly (it's more tricky that it seems).
 
 ```js
-var new_zip = new JSZip();
+var new_zip = new PizZip();
 // more files !
 new_zip.load(content);
 

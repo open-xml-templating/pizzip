@@ -19,15 +19,7 @@
     <link rel="stylesheet" href="{{site.baseurl}}/documentation/css/pygments.css">
     <link rel="stylesheet" href="{{site.baseurl}}/documentation/css/main.css">
 
-    <script type="text/javascript" src="{{site.baseurl}}/dist/jszip.js"></script>
-
-    <script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils.js"></script>
-    <!--
-    Mandatory in IE 6, 7, 8 and 9.
-    -->
-    <!--[if IE]>
-    <script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils-ie.js"></script>
-    <![endif]-->
+    <script type="text/javascript" src="{{site.baseurl}}/dist/pizzip.js"></script>
 
     <!--
     Any version of jQuery will do (it's just to write some examples), this one
@@ -46,7 +38,7 @@
           </div>
           <ul class="nav navbar-nav">
             <li {% if page.section == "api" %}class="active"{% endif %}>
-              <a href="{{site.baseurl}}/documentation/api_jszip.html">API</a>
+              <a href="{{site.baseurl}}/documentation/api_pizzip.html">API</a>
             </li>
             <li {% if page.section == "example" %}class="active"{% endif %}>
               <a href="{{site.baseurl}}/documentation/examples.html">How to / examples</a>
@@ -57,7 +49,7 @@
           </ul>
           <ul class="nav navbar-nav navbar-right">
             <li>
-              <a href="https://github.com/Stuk/jszip">JSZip on Github</a>
+              <a href="https://github.com/open-xml-templating/pizzip">PizZip on Github</a>
             </li>
           </ul>
         </div>
@@ -67,35 +59,35 @@
         <nav class="col-md-3">
         {% case page.section %}
         {% when "main" %}
-        <h4>JSZip users :</h4>
+        <h4>PizZip users :</h4>
         <ul class="nav">
               <li><a href="{{site.baseurl}}/">Installation</a></li>
               <li><a href="{{site.baseurl}}/documentation/faq.html">FAQ</a></li>
               <li><a href="{{site.baseurl}}/CHANGES.html">Changelog</a></li>
               <li><a href="{{site.baseurl}}/documentation/upgrade_guide.html">Upgrade guide</a></li>
-              <li><a href="https://github.com/Stuk/jszip/issues">Bug tracker</a></li>
+              <li><a href="https://github.com/open-xml-templating/pizzip/issues">Bug tracker</a></li>
         </ul>
-        <h4>JSZip developers :</h4>
+        <h4>PizZip developers :</h4>
         <ul class="nav">
               <li><a href="{{site.baseurl}}/documentation/contributing.html">How to contribute</a></li>
-              <li><a href="https://github.com/Stuk/jszip/graphs/contributors">Contributors</a></li>
+              <li><a href="https://github.com/open-xml-templating/pizzip/graphs/contributors">Contributors</a></li>
         </ul>
         {% when "api" %}
         <ul class="nav">
-          <li><a href="{{site.baseurl}}/documentation/api_jszip.html">JSZip</a>
+          <li><a href="{{site.baseurl}}/documentation/api_pizzip.html">PizZip</a>
             <ul>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/constructor.html">new JSZip() or JSZip()</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/constructor_load.html">new JSZip(data [,options])</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/file_name.html">JSZip#file(name)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/file_regex.html">JSZip#file(regex)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/file_data.html">JSZip#file(name, data [,options])</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/folder_data.html">JSZip#folder(name)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/folder_regex.html">JSZip#folder(regex)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/filter.html">JSZip#filter(predicate)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/remove.html">JSZip#remove(name)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/generate.html">JSZip#generate(options)</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/load.html">JSZip#load(data [, options])</a></li>
-              <li><a href="{{site.baseurl}}/documentation/api_jszip/support.html">JSZip.support</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/constructor.html">new PizZip() or PizZip()</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/constructor_load.html">new PizZip(data [,options])</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/file_name.html">PizZip#file(name)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/file_regex.html">PizZip#file(regex)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/file_data.html">PizZip#file(name, data [,options])</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/folder_data.html">PizZip#folder(name)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/folder_regex.html">PizZip#folder(regex)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/filter.html">PizZip#filter(predicate)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/remove.html">PizZip#remove(name)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/generate.html">PizZip#generate(options)</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/load.html">PizZip#load(data [, options])</a></li>
+              <li><a href="{{site.baseurl}}/documentation/api_pizzip/support.html">PizZip.support</a></li>
             </ul>
           </li>
           <li><a href="{{site.baseurl}}/documentation/api_zipobject.html">ZipObject</a></li>
@@ -103,7 +95,7 @@
         {% when "example" %}
         <h4>How to ...</h4>
         <ul class="nav">
-              <li><a href="{{site.baseurl}}/documentation/examples.html">Use JSZip</a></li>
+              <li><a href="{{site.baseurl}}/documentation/examples.html">Use PizZip</a></li>
               <li><a href="{{site.baseurl}}/documentation/howto/read_zip.html">Read a file</a></li>
               <li><a href="{{site.baseurl}}/documentation/howto/write_zip.html">Write a file</a></li>
         </ul>
@@ -143,16 +135,6 @@
           tables[i].className += " table table-condensed table-striped table-bordered ";
         }
       })();
-    </script>
-    <script>
-      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-      ga('create', 'UA-52085706-1', 'stuk.github.io');
-      ga('send', 'pageview');
-
     </script>
   </body>
 </html>

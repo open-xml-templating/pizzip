@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title>JSZip Testing</title>
+<title>PizZip Testing</title>
 <link media="screen" href="qunit-1.11.0.css" type="text/css" rel="stylesheet">
 <script type="text/javascript" src="qunit-1.11.0.js"></script>
 
-<script type="text/javascript" src="../dist/jszip.js"></script>
+<script type="text/javascript" src="../dist/pizzip.js"></script>
 
 <script type="text/javascript">
    QUnit.config.urlConfig.push({
@@ -45,19 +45,11 @@
    });
 </script>
 
-<script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils.js"></script>
-<!--
-Mandatory in IE 6, 7, 8 and 9.
--->
-<!--[if IE]>
-<script type="text/javascript" src="//stuk.github.io/jszip-utils/dist/jszip-utils-ie.js"></script>
-<![endif]-->
-
 <script>
 // no CDN, fallback on the npm version
-if(!window.JSZipUtils) {
-   document.write('<script type="text/javascript" src="../node_modules/jszip-utils/dist/jszip-utils.js"><\/script>');
-   document.write('<!--[if IE]><script type="text/javascript" src="../node_modules/jszip-utils/dist/jszip-utils-ie.js"><\/script><![endif]-->');
+if(!window.PizZipUtils) {
+   document.write('<script type="text/javascript" src="../node_modules/pizzip-utils/dist/pizzip-utils.js"><\/script>');
+   document.write('<!--[if IE]><script type="text/javascript" src="../node_modules/pizzip-utils/dist/pizzip-utils-ie.js"><\/script><![endif]-->');
 }
 </script>
 
@@ -71,5 +63,3 @@ if(!window.JSZipUtils) {
    <div id="qunit-fixture"></div>
 </body>
 </html>
-<!-- enforcing Stuk's coding style -->
-<!-- vim: set shiftwidth=3 softtabstop=3 foldmethod=marker: -->

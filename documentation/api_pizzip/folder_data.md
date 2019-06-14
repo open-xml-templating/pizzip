@@ -4,10 +4,10 @@ layout: default
 section: api
 ---
 
-__Description__ : Create a directory if it doesn't exist, return a new JSZip
+__Description__ : Create a directory if it doesn't exist, return a new PizZip
 object with the new folder as root.
 
-See also [the `dir` option of file()]({{site.baseurl}}/documentation/api_jszip/file_data.html).
+See also [the `dir` option of file()]({{site.baseurl}}/documentation/api_pizzip/file_data.html).
 
 __Arguments__
 
@@ -15,7 +15,7 @@ name | type   | description
 -----|--------|------------
 name | string | the name of the directory.
 
-__Returns__ : A new JSZip (for chaining), with the new folder as root.
+__Returns__ : A new PizZip (for chaining), with the new folder as root.
 
 __Throws__ : Nothing.
 

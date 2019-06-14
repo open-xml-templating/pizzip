@@ -17,7 +17,7 @@ section: example
 </div>
 <script type="text/javascript">
 (function () {
-  var zip = new JSZip();
+  var zip = new PizZip();
   zip.file("Hello.txt", "Hello world\n");
 
   function bindEvent(el, eventName, eventHandler) {
@@ -32,7 +32,7 @@ section: example
 
   // Blob
   var blobLink = document.getElementById('blob');
-  if (JSZip.support.blob) {
+  if (PizZip.support.blob) {
     function downloadWithBlob() {
       try {
         var blob = zip.generate({type:"blob"});

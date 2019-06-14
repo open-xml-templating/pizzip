@@ -30,7 +30,7 @@ Possible values for `type` :
 * `nodebuffer` : the result will be a nodejs Buffer containing the zip. This requires nodejs.
 
 Note : when using type = "uint8array", "arraybuffer" or "blob", be sure to
-check if the browser supports it (you can use [`JSZip.support`]({{site.baseurl}}/documentation/api_jszip/support.html)).
+check if the browser supports it (you can use [`PizZip.support`]({{site.baseurl}}/documentation/api_pizzip/support.html)).
 
 The `compressionOptions` parameter depends on the compression type. With
 `STORE` (no compression), this parameter is ignored. With `DEFLATE`, you can
@@ -39,15 +39,15 @@ between 1 (best speed) and 9 (best compression)).
 
 Note : if the entry is *already* compressed (coming from a compressed zip file),
 calling `generate()` with a different compression level won't update the entry.
-The reason is simple : JSZip doesn't know how compressed the content was and
+The reason is simple : PizZip doesn't know how compressed the content was and
 how to match the compression level with the implementation we use.
 
 Note for the `comment` option : the zip format has no flag or field to give the
-encoding of this field and JSZip will use UTF-8. With non ASCII characters you
+encoding of this field and PizZip will use UTF-8. With non ASCII characters you
 might get encoding issues if the file archiver doesn't use UTF-8 to decode the
 comment.
 
-If not set, JSZip will use the field `comment` on its `options`.
+If not set, PizZip will use the field `comment` on its `options`.
 
 Possible values for `platform` : `DOS` and `UNIX`. It also accepts nodejs
 `process.platform` values.
@@ -61,7 +61,7 @@ behavior on UNIX platforms.
 
 __About `encodeFileName`__ :
 
-By default, JSZip uses UTF-8 to encode the file names / comments. You can use
+By default, PizZip uses UTF-8 to encode the file names / comments. You can use
 this method to force an other encoding. Note : the encoding used is not stored
 in a zip file, not using UTF-8 may lead to encoding issues.
 The function takes a string and returns a bytes array (Uint8Array or Array).
@@ -69,7 +69,7 @@ The function takes a string and returns a bytes array (Uint8Array or Array).
 __Returns__ : The generated zip file.
 
 __Throws__ : An exception if the asked `type` is not available in the browser,
-see [JSZip.support]({{site.baseurl}}/documentation/api_jszip/support.html).
+see [PizZip.support]({{site.baseurl}}/documentation/api_pizzip/support.html).
 
 <!-- __Complexity__ : TODO : worst case, with/out compression, etc -->
 
@@ -108,7 +108,7 @@ zip.generate({
 
 ```js
 //This example will Generate a Open Document Spreasheet, with the correct mime type
-var zip = new JSZip();
+var zip = new PizZip();
 zip.file("mimetype", "application/vnd.oasis.opendocument.spreadsheet");
 var conf2 = zip.folder("Configurations2");
 conf2.folder("acceleator");

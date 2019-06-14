@@ -50,8 +50,8 @@ section: example
           try {
 
             var dateBefore = new Date();
-            // read the content of the file with JSZip
-            var zip = new JSZip(e.target.result);
+            // read the content of the file with PizZip
+            var zip = new PizZip(e.target.result);
             var dateAfter = new Date();
 
             $title.append($("<span>", {
@@ -78,7 +78,7 @@ section: example
       })(f);
 
       // read the file !
-      // readAsArrayBuffer and readAsBinaryString both produce valid content for JSZip.
+      // readAsArrayBuffer and readAsBinaryString both produce valid content for PizZip.
       reader.readAsArrayBuffer(f);
       // reader.readAsBinaryString(f);
     }

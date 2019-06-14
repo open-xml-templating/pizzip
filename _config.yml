@@ -8,7 +8,7 @@ gist:
     noscript: false
 # /overwritten
 
-baseurl: /jszip
+baseurl: /pizzip
 
 layouts_dir: ./documentation/_layouts
 permalink: none

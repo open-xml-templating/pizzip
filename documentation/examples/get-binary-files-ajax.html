@@ -6,8 +6,8 @@ section: example
 
 <p>Tip : check the source of the page !</p>
 
-<h3>With JSZipUtils</h3>
-<div id="jszip_utils"></div>
+<h3>With PizZipUtils</h3>
+<div id="pizzip_utils"></div>
 
 <script type="text/javascript">
 (function () {
@@ -22,17 +22,17 @@ section: example
   }
 
   //=========================
-  // JSZipUtils
+  // PizZipUtils
   //=========================
-  JSZipUtils.getBinaryContent('{{site.baseurl}}/test/ref/text.zip', function(err, data) {
-    var elt = document.getElementById('jszip_utils');
+  PizZipUtils.getBinaryContent('{{site.baseurl}}/test/ref/text.zip', function(err, data) {
+    var elt = document.getElementById('pizzip_utils');
     if(err) {
       showError(elt, err);
       return;
     }
 
     try {
-      var zip = new JSZip(data);
+      var zip = new PizZip(data);
       showContent(elt, "" + data, zip.file("Hello.txt").asText());
     } catch(e) {
       showError(elt, e);

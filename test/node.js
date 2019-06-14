@@ -1,8 +1,8 @@
 var fs = require("fs");
 
-global.JSZip = require("../lib/index");
+global.PizZip = require("../lib/index");
 
-global.JSZipTestUtils = {
+global.PizZipTestUtils = {
     loadZipFile: function(name, callback) {
         fs.readFile(name, "binary", callback);
     }

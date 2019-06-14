@@ -1,5 +1,5 @@
-var JSZipTestUtils = {
+var PizZipTestUtils = {
     loadZipFile : function (name, callback) {
-        JSZipUtils.getBinaryContent(name + "?_=" + ( new Date() ).getTime(), callback);
+        PizZipUtils.getBinaryContent(name + "?_=" + ( new Date() ).getTime(), callback);
     }
 };

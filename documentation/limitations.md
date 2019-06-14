@@ -1,5 +1,5 @@
 ---
-title: "Limitations of JSZip"
+title: "Limitations of PizZip"
 layout: default
 section: limitations
 fullpage: true
@@ -45,18 +45,18 @@ If you're having performance issues, please consider the following :
   "binary string" -&gt; "unicode string" is a consuming process.
 
 Note about compression :
-When reading a file, JSZip will store the content without decompressing it.
-When generating a compressed file, JSZip will reuse if possible compressed
+When reading a file, PizZip will store the content without decompressing it.
+When generating a compressed file, PizZip will reuse if possible compressed
 content :
 
 * If you read a zip file compressed with DEFLATE and call `generate` with the
-  DEFLATE compression, JSZip won't call the compression algorithms (same with
+  DEFLATE compression, PizZip won't call the compression algorithms (same with
   STORE everywhere.)
 * If you read a zip file compressed with DEFLATE and call `generate` with the
-  STORE compression, JSZip will have to decompress everything.
+  STORE compression, PizZip will have to decompress everything.
 
 On IE &lt;=9, typed arrays are not supported and the compression algorithm
-will fallback on arrays. In that case, JSZip needs to convert the binary string
+will fallback on arrays. In that case, PizZip needs to convert the binary string
 into an array, DEFLATE it and convert the result into a binary string.
 You don't want that to happen.
 
@@ -67,16 +67,16 @@ Some data are discarded (file metadata) and other are added (subfolders).
 
 ### Encodings support
 
-JSZip only supports UTF-8 natively. A zip file doesn't contain the name of the
+PizZip only supports UTF-8 natively. A zip file doesn't contain the name of the
 encoding used, you need to know it before doing anything.
 
 #### File name
 
-If the name of a file inside the zip is encoded with UTF-8 then JSZip can
-detect it (Language encoding flag, Unicode Path Extra Field). If not, JSZip
+If the name of a file inside the zip is encoded with UTF-8 then PizZip can
+detect it (Language encoding flag, Unicode Path Extra Field). If not, PizZip
 can't detect the encoding used and will generate [Mojibake](https://en.wikipedia.org/wiki/Mojibake).
-You can use the [encodeFileName]({{site.baseurl}}/documentation/api_jszip/generate.html)
-option and the [decodeFileName]({{site.baseurl}}/documentation/api_jszip/load.html)
+You can use the [encodeFileName]({{site.baseurl}}/documentation/api_pizzip/generate.html)
+option and the [decodeFileName]({{site.baseurl}}/documentation/api_pizzip/load.html)
 option to encode/decode using a custom encoding.
 
 #### File content
@@ -85,4 +85,4 @@ The `asText()` method uses UTF-8 to decode the content. If you have a text in
 a different encoding, you can get the bytes array with `asUint8Array()` and
 decode it with a lib (iconv, iconv-lite, etc) on your side.
 To save a text using a non-UTF-8 encoding, do the same : encode it into a
-Uint8Array before adding it to JSZip.
+Uint8Array before adding it to PizZip.

@@ -31,7 +31,7 @@ __Throws__ : Nothing.
 __Example__
 
 ```js
-var zip = new JSZip().folder("dir");
+var zip = new PizZip().folder("dir");
 zip.file("readme.txt", "content");
 zip.filter(function (relativePath, file){
   // relativePath == "readme.txt"

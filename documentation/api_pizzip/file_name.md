@@ -23,7 +23,7 @@ __Throws__ : Nothing.
 __Examples__
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 zip.file("file.txt", "content");
 
 zip.file("file.txt").name // "file.txt"
@@ -31,7 +31,7 @@ zip.file("file.txt").asText() // "content"
 zip.file("file.txt").options.dir // false
 
 // utf8 example
-var zip = new JSZip(zipFromAjaxWithUTF8);
+var zip = new PizZip(zipFromAjaxWithUTF8);
 zip.file("amount.txt").asText() // "€15"
 zip.file("amount.txt").asArrayBuffer() // an ArrayBuffer containing €15 encoded as utf8
 zip.file("amount.txt").asUint8Array() // an Uint8Array containing €15 encoded as utf8

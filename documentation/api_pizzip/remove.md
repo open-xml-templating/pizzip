@@ -12,7 +12,7 @@ name | type   | description
 -----|--------|------------
 name | string | the name of the file/folder to delete.
 
-__Returns__ : The current JSZip object.
+__Returns__ : The current PizZip object.
 
 __Throws__ : Nothing.
 
@@ -24,7 +24,7 @@ when removing a folder).
 __Example__
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 zip.file("Hello.txt", "Hello World\n");
 zip.file("temp.txt", "nothing").remove("temp.txt");
 // result : Hello.txt

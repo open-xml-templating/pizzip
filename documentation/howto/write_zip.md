@@ -58,7 +58,7 @@ downloading. Follow the [Downloadify demo](http://pixelgraphics.us/downloadify/t
 with the following changes:
 
 ```js
-zip = new JSZip();
+zip = new PizZip();
 zip.file("Hello.", "hello.txt");
 Downloadify.create('downloadify',{
 ...
@@ -77,7 +77,7 @@ TODO : send data as GET / POST ?
 #### Deprecated google gears
 
 [Franz Buchinger](http://www.picurl.org/blog/author/franz/) has written a
-brilliant tutorial on [using JSZip with Google Gears](http://www.picurl.org/blog/2009/11/22/creating-zip-archives-with-gears)
+brilliant tutorial on [using PizZip with Google Gears](http://www.picurl.org/blog/2009/11/22/creating-zip-archives-with-gears)
 ([part 2](http://www.picurl.org/blog/2009/11/29/gearszipper-part2-adding-support-for-real-files-and-canvas-elements/)).
 If you want to let your Gears users download several files at once I really
 recommend having a look at some of his [examples](http://picurl.org/gears/zipper/).
@@ -86,13 +86,13 @@ recommend having a look at some of his [examples](http://picurl.org/gears/zipper
 
 ### In nodejs
 
-JSZip can generate Buffers so you can do the following :
+PizZip can generate Buffers so you can do the following :
 
 ```js
 var fs = require("fs");
-var JSZip = require("jszip");
+var PizZip = require("pizzip");
 
-var zip = new JSZip();
+var zip = new PizZip();
 // zip.file("file", content);
 // ... and other manipulations
 

@@ -4,7 +4,7 @@ layout: default
 section: api
 ---
 
-__Description__ : Read an existing zip and merge the data in the current JSZip
+__Description__ : Read an existing zip and merge the data in the current PizZip
 object at the current folder level. This technique has some limitations, see
 [here]({{site.baseurl}}/documentation/limitations.html).
 
@@ -44,13 +44,13 @@ Zip features not (yet) supported :
 __About `decodeFileName`__ :
 
 A zip file has a flag to say if the filename and comment are encoded with UTF-8.
-If it's not set, JSZip has **no way** to know the encoding used. It usually
+If it's not set, PizZip has **no way** to know the encoding used. It usually
 is the default encoding of the operating system.
 
 The function takes the bytes array (Uint8Array or Array) and returns the
 decoded string.
 
-__Returns__ : The current JSZip object.
+__Returns__ : The current PizZip object.
 
 __Throws__ : An exception if the loaded data is not valid zip data or if it
 uses features (multi volume, password protected, etc).
@@ -70,14 +70,14 @@ complexity of the decompression algorithm.
 __Example__
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 zip.load(zipDataFromXHR);
 ```
 
 ```js
 require("fs").readFile("hello.zip", function (err, data) {
   if (err) throw err;
-  var zip = new JSZip();
+  var zip = new PizZip();
   zip.load(data);
 }
 ```
@@ -85,7 +85,7 @@ require("fs").readFile("hello.zip", function (err, data) {
 Using sub folders :
 
 ```js
-var zip = new JSZip();
+var zip = new PizZip();
 zip.folder("subfolder").load(data);
 // the content of data will be loaded in subfolder/
 ```

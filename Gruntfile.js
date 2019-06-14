@@ -109,11 +109,11 @@ module.exports = function(grunt) {
     browserify: {
       all: {
         files: {
-          'dist/jszip.js': ['lib/index.js']
+          'dist/pizzip.js': ['lib/index.js']
         },
         options: {
           browserifyOptions: {
-            standalone: 'JSZip',
+            standalone: 'PizZip',
             insertGlobalVars : {
               Buffer: function () {
                 // instead of the full polyfill, we just use the raw value
@@ -139,8 +139,8 @@ module.exports = function(grunt) {
         preserveComments: 'some'
       },
       all: {
-        src: 'dist/jszip.js',
-        dest: 'dist/jszip.min.js'
+        src: 'dist/pizzip.js',
+        dest: 'dist/pizzip.min.js'
       }
     }
   });

@@ -31,16 +31,16 @@ jQuery(function ($) {
     }
 
     /**
-     * Fetch the content, add it to the JSZip object
+     * Fetch the content, add it to the PizZip object
      * and use a jQuery deferred to hold the result.
      * @param {String} url the url of the content to fetch.
-     * @param {String} filename the filename to use in the JSZip object.
-     * @param {JSZip} zip the JSZip instance.
+     * @param {String} filename the filename to use in the PizZip object.
+     * @param {PizZip} zip the PizZip instance.
      * @return {jQuery.Deferred} the deferred containing the data.
      */
     function deferredAddZip(url, filename, zip) {
         var deferred = $.Deferred();
-        JSZipUtils.getBinaryContent(url, function (err, data) {
+        PizZipUtils.getBinaryContent(url, function (err, data) {
             if(err) {
                 deferred.reject(err);
             } else {
@@ -51,7 +51,7 @@ jQuery(function ($) {
         return deferred;
     }
 
-    if(!JSZip.support.blob) {
+    if(!PizZip.support.blob) {
         showError("This demo works only with a recent browser !");
         return;
     }
@@ -60,7 +60,7 @@ jQuery(function ($) {
 
         resetMessage();
 
-        var zip = new JSZip();
+        var zip = new PizZip();
         var deferreds = [];
 
         // find every checked item
@@ -86,4 +86,3 @@ jQuery(function ($) {
     });
 });
 
-// vim: set shiftwidth=4 softtabstop=4:
