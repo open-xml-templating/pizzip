@@ -4,11 +4,19 @@ layout: default
 section: main
 ---
 
-### v2.6.1 2016-07-28
+# v3.0.1
+
+Update export to be able to do require("pizzip/utils");
+
+# v3.0.0
+
+Initial release of Pizzip
+
+# v2.6.1 2016-07-28
 
 - update pako to v1.0.2 to fix a DEFLATE bug (see [#322](https://github.com/Stuk/pizzip/pull/322)).
 
-### v2.6.0 2016-03-23
+# v2.6.0 2016-03-23
 
 - publish `dist/` files in the npm package (see [#225](https://github.com/Stuk/pizzip/pull/225)).
 - update pako to v1.0.0 (see [#261](https://github.com/Stuk/pizzip/pull/261)).
@@ -17,21 +25,21 @@ section: main
 - handle prepended data (see [#266](https://github.com/Stuk/pizzip/pull/266)).
 - improve platform coverage in tests (see [#233](https://github.com/Stuk/pizzip/pull/233) and [#269](https://github.com/Stuk/pizzip/pull/269)).
 
-### v2.5.0 2015-03-10
+# v2.5.0 2015-03-10
 
 - add support for custom mime-types (see [#199](https://github.com/Stuk/pizzip/issues/199)).
 - add an option to set the DEFLATE level (see [#201](https://github.com/Stuk/pizzip/issues/201)).
 - improve the error message with corrupted zip (see [#202](https://github.com/Stuk/pizzip/issues/202)).
 - add support for UNIX / DOS permissions (see [#200](https://github.com/Stuk/pizzip/issues/200) and [#205](https://github.com/Stuk/pizzip/issues/205)).
 
-### v2.4.0 2014-07-24
+# v2.4.0 2014-07-24
 
 - update pako to 0.2.5 (see [#156](https://github.com/Stuk/pizzip/issues/156)).
 - make PizZip work in a Firefox addon context (see [#151](https://github.com/Stuk/pizzip/issues/151)).
 - add an option (`createFolders`) to control the subfolder generation (see [#154](https://github.com/Stuk/pizzip/issues/154)).
 - allow `Buffer` polyfill in the browser (see [#139](https://github.com/Stuk/pizzip/issues/139)).
 
-### v2.3.0 2014-06-18
+# v2.3.0 2014-06-18
 
 - don't generate subfolders (see [#130](https://github.com/Stuk/pizzip/issues/130)).
 - add comment support (see [#134](https://github.com/Stuk/pizzip/issues/134)).
@@ -40,25 +48,25 @@ section: main
 - deprecate internal functions exposed in the public API (see [#123](https://github.com/Stuk/pizzip/issues/123)).
 - improve UTF-8 support (see [#142](https://github.com/Stuk/pizzip/issues/142)).
 
-### v2.2.2, 2014-05-01
+# v2.2.2, 2014-05-01
 
 - update pako to v0.2.1, fix an error when decompressing some files (see [#126](https://github.com/Stuk/pizzip/issues/126)).
 
-### v2.2.1, 2014-04-23
+# v2.2.1, 2014-04-23
 
 - fix unreadable generated file on Windows 8 (see [#112](https://github.com/Stuk/pizzip/issues/112)).
 - replace zlibjs with pako.
 
-### v2.2.0, 2014-02-25
+# v2.2.0, 2014-02-25
 
 - make the `new` operator optional before the `PizZip` constructor (see [#93](https://github.com/Stuk/pizzip/pull/93)).
 - update zlibjs to v0.2.0.
 
-### v2.1.1, 2014-02-13
+# v2.1.1, 2014-02-13
 
 - use the npm package for zlib.js instead of the github url.
 
-### v2.1.0, 2014-02-06
+# v2.1.0, 2014-02-06
 
 - split the files and use Browserify to generate the final file (see [#74](https://github.com/Stuk/pizzip/pull/74))
 - packaging change : instead of 4 files (pizzip.js, pizzip-load.js, pizzip-inflate.js, pizzip-deflate.js) we now have 2 files : dist/pizzip.js and dist/pizzip.min.js
@@ -79,7 +87,7 @@ section: main
 - [Add support for `Buffer` in Node.js](https://github.com/Stuk/pizzip/pull/57).
 - Package for CommonJS/npm.
 
-### v1.0.1, 2013-03-04
+# v1.0.1, 2013-03-04
 
 - Fixed an issue when generating a compressed zip file with empty files or folders, see #33.
 - With bad data (null or undefined), asText/asBinary/asUint8Array/asArrayBuffer methods now return an empty string, see #36.
