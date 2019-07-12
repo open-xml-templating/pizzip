@@ -11,8 +11,8 @@
     "test-browser": "grunt build && grunt test",
     "lint": "grunt jshint",
     "utils:lint": "./symlink.sh && cd utils && grunt jshint",
-    "utils:test": "./symlink.sh && cd utils && npm run test-browser",
-    "utils:test-browser": "./symlink.sh && cd utils && grunt build && grunt test"
+    "utils:test": "./symlink.sh && cd utils && npm run utils:test-browser",
+    "utils:test-browser": "./symlink.sh && cd utils && ./node_modules/.bin/grunt build && ./node_modules/.bin/grunt test"
   },
   "contributors": [
     {

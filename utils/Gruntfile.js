@@ -91,7 +91,9 @@ module.exports = function(grunt) {
           'dist/pizzip-utils.js': ['lib/index.js']
         },
         options: {
-          standalone: 'PizZipUtils',
+          browserifyOptions: {
+              standalone: 'PizZipUtils',
+          },
           postBundleCB: postBundleWithLicense
         }
       },
