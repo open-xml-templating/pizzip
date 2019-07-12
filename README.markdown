@@ -1,5 +1,4 @@
-PizZip
-======
+# PizZip
 
 PizZip is a fork of JSZip version 2.x, because we want a synchronous Zip library.
 
@@ -11,9 +10,9 @@ var zip = new PizZip();
 zip.file("Hello.txt", "Hello World\n");
 
 var img = zip.folder("images");
-img.file("smile.gif", imgData, {base64: true});
+img.file("smile.gif", imgData, { base64: true });
 
-var content = zip.generate({type:"blob"});
+var content = zip.generate({ type: "blob" });
 
 // see FileSaver.js
 saveAs(content, "example.zip");
@@ -26,7 +25,6 @@ images/
 */
 ```
 
-License
--------
+## License
 
-PizZip is dual-licensed. You may use it under the MIT license *or* the GPLv3 license. See [LICENSE.markdown](LICENSE.markdown).
+PizZip is dual-licensed. You may use it under the MIT license _or_ the GPLv3 license. See [LICENSE.markdown](LICENSE.markdown).
