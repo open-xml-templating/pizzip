@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.0.2
+
+Export window.PizZipUtils in utils generated bundle
+
 # v3.0.1
 
 Update export to be able to do require("pizzip/utils");
