@@ -4,6 +4,7 @@
   "author": "Edgar Hipp",
   "description": "Create, read and edit .zip files with Javascript",
   "scripts": {
+    "preversion": "npm test && cp utils/dist/* dist",
     "preinstall": "rm -f utils/node_modules",
     "test": "npm run test-node && npm run test-browser",
     "test-node": "cd test && qunit -c node.js -t test.js",
