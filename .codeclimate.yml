@@ -11,4 +11,4 @@ engines:
     enabled: true
 ratings:
   paths:
-  - "lib/*"
+  - "es6/*"

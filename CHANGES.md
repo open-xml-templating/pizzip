@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.0.3
+
+Migrate to babel, eslint, prettier and mocha
+
 # v3.0.2
 
 Export window.PizZipUtils in utils generated bundle

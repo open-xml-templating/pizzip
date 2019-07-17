@@ -39,12 +39,12 @@ jQuery(function ($) {
      * @return {jQuery.Deferred} the deferred containing the data.
      */
     function deferredAddZip(url, filename, zip) {
-        var deferred = $.Deferred();
+        const deferred = $.Deferred();
         PizZipUtils.getBinaryContent(url, function (err, data) {
             if(err) {
                 deferred.reject(err);
             } else {
-                zip.file(filename, data, {binary:true});
+                zip.file(filename, data, {binary: true});
                 deferred.resolve(data);
             }
         });
@@ -56,24 +56,23 @@ jQuery(function ($) {
         return;
     }
 
-    var $form = $("#download_form").on("submit", function () {
-
+    const $form = $("#download_form").on("submit", function () {
         resetMessage();
 
-        var zip = new PizZip();
-        var deferreds = [];
+        const zip = new PizZip();
+        const deferreds = [];
 
         // find every checked item
         $(this).find(":checked").each(function () {
-            var $this = $(this);
-            var url = $this.data("url");
-            var filename = url.replace(/.*\//g, "");
+            const $this = $(this);
+            const url = $this.data("url");
+            const filename = url.replace(/.*\//g, "");
             deferreds.push(deferredAddZip(url, filename, zip));
         });
 
         // when everything has been downloaded, we can trigger the dl
         $.when.apply($, deferreds).done(function () {
-            var blob = zip.generate({type:"blob"});
+            const blob = zip.generate({type: "blob"});
 
             // see FileSaver.js
             saveAs(blob, "example.zip");

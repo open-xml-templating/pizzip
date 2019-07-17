@@ -2,17 +2,21 @@
   "name": "pizzip",
   "version": "3.0.2",
   "author": "Edgar Hipp",
-  "description": "Create, read and edit .zip files with Javascript",
+  "description": "Create, read and edit .zip files synchronously with Javascript",
   "scripts": {
-    "preversion": "npm test && cp utils/dist/* dist",
-    "preinstall": "rm -f utils/node_modules",
-    "test": "npm run test-node && npm run test-browser",
-    "test-node": "cd test && qunit -c node.js -t test.js",
-    "test-browser": "grunt build && grunt test",
-    "lint": "grunt jshint",
-    "utils:lint": "./symlink.sh && cd utils && grunt jshint",
-    "utils:test": "./symlink.sh && cd utils && npm run utils:test-browser",
-    "utils:test-browser": "./symlink.sh && cd utils && ./node_modules/.bin/grunt build && ./node_modules/.bin/grunt test"
+    "lint:fix": "npm run prettier:fix && npm run eslint:fix",
+    "eslint:fix": "eslint_d 'es6/**/*.js' --fix",
+    "prettier:fix": "prettier --write '*.js' 'es6/**/*.js' 'test/test.js' test/node.js 'utils/*.js' 'utils/es6/**/*.js'",
+    "browserify:lib": "webpack",
+    "babel": "babel es6 --out-dir js",
+    "babel:watch": "npm run babel -- --watch",
+    "build": "npm run browserify:lib && npm run browserify:lib:min",
+    "browserify:lib:min": "MIN=true webpack",
+    "preversion": "npm run babel && npm test && cp utils/dist/* dist",
+    "preinstall": "rm -rf utils/node_modules",
+    "test": "mocha test/test.js",
+    "test:watch": "mocha test/test.js --watch",
+    "utils:build": "cd utils && MIN=true ./node_modules/.bin/webpack && ./node_modules/.bin/webpack && IE=true MIN=true ./node_modules/.bin/webpack && IE=true ./node_modules/.bin/webpack"
   },
   "contributors": [
     {
@@ -29,9 +33,12 @@
     },
     {
       "name": "yiminghe"
+    },
+    {
+      "name": "Edgar Hipp"
     }
   ],
-  "main": "./lib/index",
+  "main": "./js/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/open-xml-templating/pizzip"
@@ -42,16 +49,21 @@
     "inflate"
   ],
   "devDependencies": {
-    "qunit": "^0.7.6",
-    "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.9",
-    "grunt-saucelabs": "~8.6.1",
-    "grunt-contrib-connect": "~0.11.2",
-    "jshint": "~2.8.0",
-    "browserify": "~11.2.0",
-    "grunt-browserify": "~4.0.1",
-    "grunt-contrib-jshint": "~0.11.3",
-    "grunt-contrib-uglify": "~0.9.2"
+    "@babel/cli": "^7.5.0",
+    "@babel/core": "^7.5.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "acorn": "^6.2.0",
+    "babel-eslint": "^10.0.2",
+    "babel-loader": "^8.0.6",
+    "chai": "^4.2.0",
+    "eslint": "^6.0.1",
+    "eslint-plugin-import": "^2.18.0",
+    "eslint_d": "^8.0.0",
+    "mocha": "^6.1.4",
+    "prettier": "^1.18.2",
+    "webpack": "^4.36.0",
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
     "pako": "~1.0.2"
