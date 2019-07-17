@@ -1,6 +1,6 @@
 {
   "name": "pizzip",
-  "version": "3.0.2",
+  "version": "3.0.3",
   "author": "Edgar Hipp",
   "description": "Create, read and edit .zip files synchronously with Javascript",
   "scripts": {
