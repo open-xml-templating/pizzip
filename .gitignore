@@ -3,3 +3,4 @@ node_modules
 sauce_connect.log
 .c9revisionsjs
 js/
+dist

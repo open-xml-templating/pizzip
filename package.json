@@ -12,7 +12,7 @@
     "babel:watch": "npm run babel -- --watch",
     "build": "npm run browserify:lib && npm run browserify:lib:min",
     "browserify:lib:min": "MIN=true webpack",
-    "preversion": "npm run babel && npm test && cp utils/dist/* dist",
+    "preversion": "npm run babel && npm run build && npm test && cp utils/dist/* dist",
     "preinstall": "rm -rf utils/node_modules",
     "test": "mocha test/test.js",
     "test:watch": "mocha test/test.js --watch",

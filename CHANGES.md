@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.0.4
+
+Add missing built files in dist
+
 # v3.0.3
 
 Migrate to babel, eslint, prettier and mocha
