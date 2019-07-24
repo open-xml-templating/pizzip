@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.0.5
+
+Compile to es5
+
 # v3.0.4
 
 Add missing built files in dist
