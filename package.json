@@ -11,12 +11,11 @@
     "babel": "babel es6 --out-dir js",
     "babel:watch": "npm run babel -- --watch",
     "build": "npm run browserify:lib && npm run browserify:lib:min",
-    "browserify:lib:min": "MIN=true webpack",
+    "browserify:lib:min": "cross-env MIN=true webpack",
     "preversion": "npm run babel && npm run build && npm test && cp utils/dist/* dist",
-    "preinstall": "rm -rf utils/node_modules",
     "test": "mocha test/test.js",
     "test:watch": "mocha test/test.js --watch",
-    "utils:build": "cd utils && MIN=true ./node_modules/.bin/webpack && ./node_modules/.bin/webpack && IE=true MIN=true ./node_modules/.bin/webpack && IE=true ./node_modules/.bin/webpack"
+    "utils:build": "cd utils && cross-env MIN=true ./node_modules/.bin/webpack && ./node_modules/.bin/webpack && IE=true cross-env MIN=true ./node_modules/.bin/webpack && IE=true ./node_modules/.bin/webpack"
   },
   "contributors": [
     {
@@ -57,6 +56,7 @@
     "babel-eslint": "^10.0.2",
     "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
+    "cross-env": "^5.2.0",
     "eslint": "^6.0.1",
     "eslint-plugin-import": "^2.18.0",
     "eslint_d": "^8.0.0",
