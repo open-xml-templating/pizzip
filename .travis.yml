@@ -2,8 +2,12 @@ language: node_js
 node_js:
 - '0.10'
 - '0.12'
-- '4.4'
-- 'stable'
+- '4'
+- '6'
+- '8'
+- '10'
+- '12'
+- '13'
 script: npm run $COMMAND
 sudo: false
 env:
