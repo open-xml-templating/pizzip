@@ -12,10 +12,10 @@
     "babel:watch": "npm run babel -- --watch",
     "build": "npm run browserify:lib && npm run browserify:lib:min",
     "browserify:lib:min": "cross-env MIN=true webpack",
-    "preversion": "npm run babel && npm run build && npm test && cp utils/dist/* dist",
+    "preversion": "npm run babel && npm run build && npm test && npm run utils:build && cp utils/dist/* dist",
     "test": "mocha test/test.js",
     "test:watch": "mocha test/test.js --watch",
-    "utils:build": "cd utils && cross-env MIN=true ./node_modules/.bin/webpack && ./node_modules/.bin/webpack && IE=true cross-env MIN=true ./node_modules/.bin/webpack && IE=true ./node_modules/.bin/webpack"
+    "utils:build": "cd utils && cross-env MIN=true ../node_modules/.bin/webpack && ../node_modules/.bin/webpack && IE=true cross-env MIN=true ../node_modules/.bin/webpack && IE=true ../node_modules/.bin/webpack"
   },
   "contributors": [
     {
