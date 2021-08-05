@@ -1018,7 +1018,9 @@ describe("PizZip", function() {
 				);
 			} catch (e) {
 				assert(
-					e.message.match("unsupported format"),
+					e.message.match(
+						"Cannot read data from a Date, you probably are running new PizZip\\(data\\) with a date"
+					),
 					"the error message is useful"
 				);
 			}
@@ -1033,6 +1035,35 @@ describe("PizZip", function() {
 						"the error message is useful"
 					);
 				}
+			}
+		});
+
+		it("should error if using Promise as first argument", function() {
+			const p = new Promise(function(resolve) {
+				resolve("hello");
+			});
+			try {
+				const zip = new PizZip(p);
+			} catch (e) {
+				assert(
+					e.message.match(
+						"Cannot read data from a promise, you probably are running new PizZip\\(data\\) with a promise"
+					),
+					"the error message should be useful"
+				);
+			}
+		});
+
+		it("should error if using Object as first argument", function() {
+			try {
+				const zip = new PizZip({});
+			} catch (e) {
+				assert(
+					e.message.match(
+						"Unsupported data given to new PizZip\\(data\\) \\(object given\\)"
+					),
+					"the error message should be useful"
+				);
 			}
 		});
 

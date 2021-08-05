@@ -4,6 +4,12 @@ layout: default
 section: main
 ---
 
+# v3.1.0
+
+Update pako to v2
+
+When using new Pizzip(promise), show specific error message
+
 # v3.0.5
 
 Compile to es5

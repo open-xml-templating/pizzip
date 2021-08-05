@@ -260,6 +260,9 @@ exports.transformTo = function(outputType, input) {
  * @return {String} the (lowercase) type of the input.
  */
 exports.getTypeOf = function(input) {
+	if (input == null) {
+		return;
+	}
 	if (typeof input === "string") {
 		return "string";
 	}
@@ -274,6 +277,21 @@ exports.getTypeOf = function(input) {
 	}
 	if (support.arraybuffer && input instanceof ArrayBuffer) {
 		return "arraybuffer";
+	}
+	if (input instanceof Promise) {
+		throw new Error(
+			"Cannot read data from a promise, you probably are running new PizZip(data) with a promise"
+		);
+	}
+	if (input instanceof Date) {
+		throw new Error(
+			"Cannot read data from a Date, you probably are running new PizZip(data) with a date"
+		);
+	}
+	if (typeof input === "object" && input.crc32 == null) {
+		throw new Error(
+			"Unsupported data given to new PizZip(data) (object given)"
+		);
 	}
 };
 
