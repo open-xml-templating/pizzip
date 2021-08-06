@@ -1,16 +1,16 @@
 "use strict";
-const support = require("./support");
-const utils = require("./utils");
-const crc32 = require("./crc32");
-const signature = require("./signature");
-const defaults = require("./defaults");
-const base64 = require("./base64");
-const compressions = require("./compressions");
-const CompressedObject = require("./compressedObject");
-const nodeBuffer = require("./nodeBuffer");
-const utf8 = require("./utf8");
-const StringWriter = require("./stringWriter");
-const Uint8ArrayWriter = require("./uint8ArrayWriter");
+const support = require("./support.js");
+const utils = require("./utils.js");
+const crc32 = require("./crc32.js");
+const signature = require("./signature.js");
+const defaults = require("./defaults.js");
+const base64 = require("./base64.js");
+const compressions = require("./compressions.js");
+const CompressedObject = require("./compressedObject.js");
+const nodeBuffer = require("./nodeBuffer.js");
+const utf8 = require("./utf8.js");
+const StringWriter = require("./stringWriter.js");
+const Uint8ArrayWriter = require("./uint8ArrayWriter.js");
 
 /**
  * Returns the raw data of a ZipObject, decompress the content if necessary.
@@ -120,13 +120,13 @@ const out = {
 		if (arguments.length === 1) {
 			if (utils.isRegExp(name)) {
 				const regexp = name;
-				return this.filter(function(relativePath, file) {
+				return this.filter(function (relativePath, file) {
 					return !file.dir && regexp.test(relativePath);
 				});
 			}
 			// text
 			return (
-				this.filter(function(relativePath, file) {
+				this.filter(function (relativePath, file) {
 					return !file.dir && relativePath === name;
 				})[0] || null
 			);
@@ -149,7 +149,7 @@ const out = {
 		}
 
 		if (utils.isRegExp(arg)) {
-			return this.filter(function(relativePath, file) {
+			return this.filter(function (relativePath, file) {
 				return file.dir && arg.test(relativePath);
 			});
 		}
@@ -185,7 +185,7 @@ const out = {
 			delete this.files[name];
 		} else {
 			// maybe a folder, delete recursively
-			const kids = this.filter(function(relativePath, file) {
+			const kids = this.filter(function (relativePath, file) {
 				return file.name.slice(0, name.length) === name;
 			});
 			for (let i = 0; i < kids.length; i++) {

@@ -1,20 +1,20 @@
 "use strict";
-const support = require("./support");
-const compressions = require("./compressions");
-const nodeBuffer = require("./nodeBuffer");
+const support = require("./support.js");
+const compressions = require("./compressions.js");
+const nodeBuffer = require("./nodeBuffer.js");
 /**
  * Convert a string to a "binary string" : a string containing only char codes between 0 and 255.
  * @param {string} str the string to transform.
  * @return {String} the binary string.
  */
-exports.string2binary = function(str) {
+exports.string2binary = function (str) {
 	let result = "";
 	for (let i = 0; i < str.length; i++) {
 		result += String.fromCharCode(str.charCodeAt(i) & 0xff);
 	}
 	return result;
 };
-exports.arrayBuffer2Blob = function(buffer, mimeType) {
+exports.arrayBuffer2Blob = function (buffer, mimeType) {
 	exports.checkSupport("blob");
 	mimeType = mimeType || "application/zip";
 
@@ -238,7 +238,7 @@ transform.nodebuffer = {
  * @param {String|Array|ArrayBuffer|Uint8Array|Buffer} input the input to convert.
  * @throws {Error} an Error if the browser doesn't support the requested output type.
  */
-exports.transformTo = function(outputType, input) {
+exports.transformTo = function (outputType, input) {
 	if (!input) {
 		// undefined, null, etc
 		// an empty string won't harm.
@@ -259,7 +259,7 @@ exports.transformTo = function(outputType, input) {
  * @param {Object} input the input to identify.
  * @return {String} the (lowercase) type of the input.
  */
-exports.getTypeOf = function(input) {
+exports.getTypeOf = function (input) {
 	if (input == null) {
 		return;
 	}
@@ -300,7 +300,7 @@ exports.getTypeOf = function(input) {
  * @param {String} type the type to check.
  * @throws {Error} an Error if the browser doesn't support the requested type.
  */
-exports.checkSupport = function(type) {
+exports.checkSupport = function (type) {
 	const supported = support[type.toLowerCase()];
 	if (!supported) {
 		throw new Error(type + " is not supported by this browser");
@@ -314,7 +314,7 @@ exports.MAX_VALUE_32BITS = -1; // well, "\xFF\xFF\xFF\xFF\xFF\xFF\xFF\xFF" is pa
  * @param {string} str the string to prettify.
  * @return {string} a pretty string.
  */
-exports.pretty = function(str) {
+exports.pretty = function (str) {
 	let res = "",
 		code,
 		i;
@@ -330,7 +330,7 @@ exports.pretty = function(str) {
  * @param {string} compressionMethod the method magic to find.
  * @return {Object|null} the PizZip compression object, null if none found.
  */
-exports.findCompression = function(compressionMethod) {
+exports.findCompression = function (compressionMethod) {
 	for (const method in compressions) {
 		if (!compressions.hasOwnProperty(method)) {
 			continue;
@@ -347,7 +347,7 @@ exports.findCompression = function(compressionMethod) {
  * @return {Boolean}        true if the object is a regular expression,
  * false otherwise
  */
-exports.isRegExp = function(object) {
+exports.isRegExp = function (object) {
 	return Object.prototype.toString.call(object) === "[object RegExp]";
 };
 
@@ -357,7 +357,7 @@ exports.isRegExp = function(object) {
  * @param {...Object} var_args All objects to merge.
  * @return {Object} a new object with the data of the others.
  */
-exports.extend = function() {
+exports.extend = function () {
 	const result = {};
 	let i, attr;
 	for (i = 0; i < arguments.length; i++) {

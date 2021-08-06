@@ -1,5 +1,5 @@
 "use strict";
-const Uint8ArrayReader = require("./uint8ArrayReader");
+const Uint8ArrayReader = require("./uint8ArrayReader.js");
 
 function NodeBufferReader(data) {
 	this.data = data;
@@ -12,7 +12,7 @@ NodeBufferReader.prototype = new Uint8ArrayReader();
 /**
  * @see DataReader.readData
  */
-NodeBufferReader.prototype.readData = function(size) {
+NodeBufferReader.prototype.readData = function (size) {
 	this.checkOffset(size);
 	const result = this.data.slice(
 		this.zero + this.index,

@@ -10,4 +10,4 @@ exports.STORE = {
 	compressInputType: null,
 	uncompressInputType: null,
 };
-exports.DEFLATE = require("./flate");
+exports.DEFLATE = require("./flate.js");

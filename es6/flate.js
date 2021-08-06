@@ -9,11 +9,11 @@ exports.uncompressInputType = USE_TYPEDARRAY ? "uint8array" : "array";
 exports.compressInputType = USE_TYPEDARRAY ? "uint8array" : "array";
 
 exports.magic = "\x08\x00";
-exports.compress = function(input, compressionOptions) {
+exports.compress = function (input, compressionOptions) {
 	return pako.deflateRaw(input, {
 		level: compressionOptions.level || -1, // default compression
 	});
 };
-exports.uncompress = function(input) {
+exports.uncompress = function (input) {
 	return pako.inflateRaw(input);
 };

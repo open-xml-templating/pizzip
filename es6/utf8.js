@@ -1,8 +1,8 @@
 "use strict";
 
-const utils = require("./utils");
-const support = require("./support");
-const nodeBuffer = require("./nodeBuffer");
+const utils = require("./utils.js");
+const support = require("./support.js");
+const nodeBuffer = require("./nodeBuffer.js");
 
 /**
  * The following functions come from pako, from pako/lib/utils/strings

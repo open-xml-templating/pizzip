@@ -1,12 +1,12 @@
 "use strict";
-const StringReader = require("./stringReader");
-const NodeBufferReader = require("./nodeBufferReader");
-const Uint8ArrayReader = require("./uint8ArrayReader");
-const ArrayReader = require("./arrayReader");
-const utils = require("./utils");
-const sig = require("./signature");
-const ZipEntry = require("./zipEntry");
-const support = require("./support");
+const StringReader = require("./stringReader.js");
+const NodeBufferReader = require("./nodeBufferReader.js");
+const Uint8ArrayReader = require("./uint8ArrayReader.js");
+const ArrayReader = require("./arrayReader.js");
+const utils = require("./utils.js");
+const sig = require("./signature.js");
+const ZipEntry = require("./zipEntry.js");
+const support = require("./support.js");
 //  class ZipEntries {{{
 /**
  * All the entries in the zip file.
@@ -244,9 +244,8 @@ ZipEntries.prototype = {
 				)
 			) {
 				// console.warn("ZIP64 end of central directory not where expected.");
-				this.relativeOffsetEndOfZip64CentralDir = this.reader.lastIndexOfSignature(
-					sig.ZIP64_CENTRAL_DIRECTORY_END
-				);
+				this.relativeOffsetEndOfZip64CentralDir =
+					this.reader.lastIndexOfSignature(sig.ZIP64_CENTRAL_DIRECTORY_END);
 				if (this.relativeOffsetEndOfZip64CentralDir < 0) {
 					throw new Error(
 						"Corrupted zip : can't find the ZIP64 end of central directory"

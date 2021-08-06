@@ -4,7 +4,7 @@ const _keyStr =
 	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
 // public method for encoding
-exports.encode = function(input) {
+exports.encode = function (input) {
 	let output = "";
 	let chr1, chr2, chr3, enc1, enc2, enc3, enc4;
 	let i = 0;
@@ -37,7 +37,7 @@ exports.encode = function(input) {
 };
 
 // public method for decoding
-exports.decode = function(input) {
+exports.decode = function (input) {
 	let output = "";
 	let chr1, chr2, chr3;
 	let enc1, enc2, enc3, enc4;

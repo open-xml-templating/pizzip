@@ -1,6 +1,6 @@
 "use strict";
-const DataReader = require("./dataReader");
-const utils = require("./utils");
+const DataReader = require("./dataReader.js");
+const utils = require("./utils.js");
 
 function StringReader(data, optimizedBinaryString) {
 	this.data = data;
@@ -15,19 +15,19 @@ StringReader.prototype = new DataReader();
 /**
  * @see DataReader.byteAt
  */
-StringReader.prototype.byteAt = function(i) {
+StringReader.prototype.byteAt = function (i) {
 	return this.data.charCodeAt(this.zero + i);
 };
 /**
  * @see DataReader.lastIndexOfSignature
  */
-StringReader.prototype.lastIndexOfSignature = function(sig) {
+StringReader.prototype.lastIndexOfSignature = function (sig) {
 	return this.data.lastIndexOf(sig) - this.zero;
 };
 /**
  * @see DataReader.readData
  */
-StringReader.prototype.readData = function(size) {
+StringReader.prototype.readData = function (size) {
 	this.checkOffset(size);
 	// this will work because the constructor applied the "& 0xff" mask.
 	const result = this.data.slice(

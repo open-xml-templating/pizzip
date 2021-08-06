@@ -1,11 +1,11 @@
 "use strict";
-const utils = require("./utils");
+const utils = require("./utils.js");
 
 /**
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.string2binary = function(str) {
+exports.string2binary = function (str) {
 	return utils.string2binary(str);
 };
 
@@ -13,7 +13,7 @@ exports.string2binary = function(str) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.string2Uint8Array = function(str) {
+exports.string2Uint8Array = function (str) {
 	return utils.transformTo("uint8array", str);
 };
 
@@ -21,7 +21,7 @@ exports.string2Uint8Array = function(str) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.uint8Array2String = function(array) {
+exports.uint8Array2String = function (array) {
 	return utils.transformTo("string", array);
 };
 
@@ -29,7 +29,7 @@ exports.uint8Array2String = function(array) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.string2Blob = function(str) {
+exports.string2Blob = function (str) {
 	const buffer = utils.transformTo("arraybuffer", str);
 	return utils.arrayBuffer2Blob(buffer);
 };
@@ -38,7 +38,7 @@ exports.string2Blob = function(str) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.arrayBuffer2Blob = function(buffer) {
+exports.arrayBuffer2Blob = function (buffer) {
 	return utils.arrayBuffer2Blob(buffer);
 };
 
@@ -46,7 +46,7 @@ exports.arrayBuffer2Blob = function(buffer) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.transformTo = function(outputType, input) {
+exports.transformTo = function (outputType, input) {
 	return utils.transformTo(outputType, input);
 };
 
@@ -54,7 +54,7 @@ exports.transformTo = function(outputType, input) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.getTypeOf = function(input) {
+exports.getTypeOf = function (input) {
 	return utils.getTypeOf(input);
 };
 
@@ -62,7 +62,7 @@ exports.getTypeOf = function(input) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.checkSupport = function(type) {
+exports.checkSupport = function (type) {
 	return utils.checkSupport(type);
 };
 
@@ -82,7 +82,7 @@ exports.MAX_VALUE_32BITS = utils.MAX_VALUE_32BITS;
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.pretty = function(str) {
+exports.pretty = function (str) {
 	return utils.pretty(str);
 };
 
@@ -90,7 +90,7 @@ exports.pretty = function(str) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.findCompression = function(compressionMethod) {
+exports.findCompression = function (compressionMethod) {
 	return utils.findCompression(compressionMethod);
 };
 
@@ -98,6 +98,6 @@ exports.findCompression = function(compressionMethod) {
  * @deprecated
  * This function will be removed in a future version without replacement.
  */
-exports.isRegExp = function(object) {
+exports.isRegExp = function (object) {
 	return utils.isRegExp(object);
 };

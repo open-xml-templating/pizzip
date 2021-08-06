@@ -1,5 +1,5 @@
 "use strict";
-const ArrayReader = require("./arrayReader");
+const ArrayReader = require("./arrayReader.js");
 
 function Uint8ArrayReader(data) {
 	if (data) {
@@ -13,7 +13,7 @@ Uint8ArrayReader.prototype = new ArrayReader();
 /**
  * @see DataReader.readData
  */
-Uint8ArrayReader.prototype.readData = function(size) {
+Uint8ArrayReader.prototype.readData = function (size) {
 	this.checkOffset(size);
 	if (size === 0) {
 		// in IE10, when using subarray(idx, idx), we get the array [0x00] instead of [].

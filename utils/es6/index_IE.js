@@ -24,7 +24,7 @@ const IEBinaryToArray_ByteStr_Script =
 // inject VBScript
 document.write(IEBinaryToArray_ByteStr_Script);
 
-global.PizZipUtils._getBinaryFromXHR = function(xhr) {
+global.PizZipUtils._getBinaryFromXHR = function (xhr) {
 	const binary = xhr.responseBody;
 	const byteMapping = {};
 	for (let i = 0; i < 256; i++) {
@@ -36,7 +36,7 @@ global.PizZipUtils._getBinaryFromXHR = function(xhr) {
 	const rawBytes = IEBinaryToArray_ByteStr(binary);
 	const lastChr = IEBinaryToArray_ByteStr_Last(binary);
 	return (
-		rawBytes.replace(/[\s\S]/g, function(match) {
+		rawBytes.replace(/[\s\S]/g, function (match) {
 			return byteMapping[match];
 		}) + lastChr
 	);

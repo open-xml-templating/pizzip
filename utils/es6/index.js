@@ -5,7 +5,7 @@ const PizZipUtils = {};
 // The transformation doesn't throw away high-order byte (with responseText)
 // because PizZip handles that case. If not used with PizZip, you may need to
 // do it, see https://developer.mozilla.org/En/Using_XMLHttpRequest#Handling_binary_data
-PizZipUtils._getBinaryFromXHR = function(xhr) {
+PizZipUtils._getBinaryFromXHR = function (xhr) {
 	// for xhr.responseText, the 0xFF mask is applied by PizZip
 	return xhr.response || xhr.responseText;
 };
@@ -31,13 +31,13 @@ const createXHR = window.ActiveXObject
 	   * Additionally XMLHttpRequest can be disabled in IE7/IE8 so
 	   * we need a fallback.
 	   */
-	  function() {
+	  function () {
 			return createStandardXHR() || createActiveXHR();
 	  }
 	: // For all other browsers, use the standard XMLHttpRequest object
 	  createStandardXHR;
 
-PizZipUtils.getBinaryContent = function(path, callback) {
+PizZipUtils.getBinaryContent = function (path, callback) {
 	/*
 	 * Here is the tricky part : getting the data.
 	 * In firefox/chrome/opera/... setting the mimeType to 'text/plain; charset=x-user-defined'
@@ -67,7 +67,7 @@ PizZipUtils.getBinaryContent = function(path, callback) {
 			xhr.overrideMimeType("text/plain; charset=x-user-defined");
 		}
 
-		xhr.onreadystatechange = function(evt) {
+		xhr.onreadystatechange = function (evt) {
 			let file, err;
 			// use `xhr` and not `this`... thanks IE
 			if (xhr.readyState === 4) {

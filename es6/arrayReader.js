@@ -1,5 +1,5 @@
 "use strict";
-const DataReader = require("./dataReader");
+const DataReader = require("./dataReader.js");
 
 function ArrayReader(data) {
 	if (data) {
@@ -17,13 +17,13 @@ ArrayReader.prototype = new DataReader();
 /**
  * @see DataReader.byteAt
  */
-ArrayReader.prototype.byteAt = function(i) {
+ArrayReader.prototype.byteAt = function (i) {
 	return this.data[this.zero + i];
 };
 /**
  * @see DataReader.lastIndexOfSignature
  */
-ArrayReader.prototype.lastIndexOfSignature = function(sig) {
+ArrayReader.prototype.lastIndexOfSignature = function (sig) {
 	const sig0 = sig.charCodeAt(0),
 		sig1 = sig.charCodeAt(1),
 		sig2 = sig.charCodeAt(2),
@@ -44,7 +44,7 @@ ArrayReader.prototype.lastIndexOfSignature = function(sig) {
 /**
  * @see DataReader.readData
  */
-ArrayReader.prototype.readData = function(size) {
+ArrayReader.prototype.readData = function (size) {
 	this.checkOffset(size);
 	if (size === 0) {
 		return [];

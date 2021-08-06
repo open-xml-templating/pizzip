@@ -1,9 +1,9 @@
 "use strict";
-const StringReader = require("./stringReader");
-const utils = require("./utils");
-const CompressedObject = require("./compressedObject");
-const pizzipProto = require("./object");
-const support = require("./support");
+const StringReader = require("./stringReader.js");
+const utils = require("./utils.js");
+const CompressedObject = require("./compressedObject.js");
+const pizzipProto = require("./object.js");
+const support = require("./support.js");
 
 const MADE_BY_DOS = 0x00;
 const MADE_BY_UNIX = 0x03;
@@ -44,7 +44,7 @@ ZipEntry.prototype = {
 	 * @return {Function} the callback to get the compressed content (the type depends of the DataReader class).
 	 */
 	prepareCompressedContent(reader, from, length) {
-		return function() {
+		return function () {
 			const previousIndex = reader.index;
 			reader.setIndex(from);
 			const compressedFileData = reader.readData(length);
@@ -63,7 +63,7 @@ ZipEntry.prototype = {
 	 * @return {Function} the callback to get the uncompressed content (the type depends of the DataReader class).
 	 */
 	prepareContent(reader, from, length, compression, uncompressedSize) {
-		return function() {
+		return function () {
 			const compressedFileData = utils.transformTo(
 				compression.uncompressInputType,
 				this.getCompressedContent()

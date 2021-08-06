@@ -1,6 +1,6 @@
 "use strict";
 
-const utils = require("./utils");
+const utils = require("./utils.js");
 
 /**
  * An object to write any content to a string.

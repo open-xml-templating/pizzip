@@ -1,6 +1,6 @@
 "use strict";
 
-const base64 = require("./base64");
+const base64 = require("./base64.js");
 
 /**
 Usage:
@@ -40,7 +40,7 @@ function PizZip(data, options) {
 	if (data) {
 		this.load(data, options);
 	}
-	this.clone = function() {
+	this.clone = function () {
 		const newObj = new PizZip();
 		for (const i in this) {
 			if (typeof this[i] !== "function") {
@@ -50,16 +50,16 @@ function PizZip(data, options) {
 		return newObj;
 	};
 }
-PizZip.prototype = require("./object");
-PizZip.prototype.load = require("./load");
-PizZip.support = require("./support");
-PizZip.defaults = require("./defaults");
+PizZip.prototype = require("./object.js");
+PizZip.prototype.load = require("./load.js");
+PizZip.support = require("./support.js");
+PizZip.defaults = require("./defaults.js");
 
 /**
  * @deprecated
  * This namespace will be removed in a future version without replacement.
  */
-PizZip.utils = require("./deprecatedPublicUtils");
+PizZip.utils = require("./deprecatedPublicUtils.js");
 
 PizZip.base64 = {
 	/**
@@ -77,5 +77,5 @@ PizZip.base64 = {
 		return base64.decode(input);
 	},
 };
-PizZip.compressions = require("./compressions");
+PizZip.compressions = require("./compressions.js");
 module.exports = PizZip;

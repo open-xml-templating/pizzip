@@ -1,9 +1,9 @@
 "use strict";
-const base64 = require("./base64");
-const utf8 = require("./utf8");
-const utils = require("./utils");
-const ZipEntries = require("./zipEntries");
-module.exports = function(data, options) {
+const base64 = require("./base64.js");
+const utf8 = require("./utf8.js");
+const utils = require("./utils.js");
+const ZipEntries = require("./zipEntries.js");
+module.exports = function (data, options) {
 	let i, input;
 	options = utils.extend(options || {}, {
 		base64: false,
