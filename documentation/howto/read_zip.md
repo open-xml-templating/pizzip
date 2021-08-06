@@ -2,8 +2,7 @@
 
 title: "How to read a file" layout: default
 
-section: example
-----------------
+## section: example
 
 This page explains how to read an existing zip file or add a existing file into the zip file.
 
@@ -14,8 +13,8 @@ This page explains how to read an existing zip file or add a existing file into 
 Getting binary data with an ajax request is hard (mainly because of IE <= 9). The easy way is to use [PizZipUtils.getBinaryContent](https://github.com/open-xml-templating/pizzip-utils). With PizZipUtils.getBinaryContent, you can do the following (see the documentation for more examples) :
 
 ```js
-PizZipUtils.getBinaryContent('path/to/content.zip', function(err, data) {
-  if(err) {
+PizZipUtils.getBinaryContent("path/to/content.zip", function (err, data) {
+  if (err) {
     throw err; // or handle err
   }
 
@@ -46,13 +45,13 @@ var fs = require("fs");
 var PizZip = require("pizzip");
 
 // read a zip file
-fs.readFile("test.zip", function(err, data) {
+fs.readFile("test.zip", function (err, data) {
   if (err) throw err;
   var zip = new PizZip(data);
 });
 
 // read a file and add it to a zip
-fs.readFile("picture.png", function(err, data) {
+fs.readFile("picture.png", function (err, data) {
   if (err) throw err;
   var zip = new PizZip();
   zip.file("picture.png", data);
@@ -78,7 +77,8 @@ var req = http.get(url.parse("http://localhost/.../file.zip"), function (res) {
     // handle error
     return;
   }
-  var data = [], dataLen = 0;
+  var data = [],
+    dataLen = 0;
 
   // don't set the encoding, it will break everything !
   // or, if you must, set it to null. In that case the chunk will be a string.
@@ -89,8 +89,8 @@ var req = http.get(url.parse("http://localhost/.../file.zip"), function (res) {
   });
 
   res.on("end", function () {
-    var buf = new Buffer(dataLen);
-    for (var i=0,len=data.length,pos=0; i<len; i++) {
+    var buf = Buffer.alloc(dataLen);
+    for (var i = 0, len = data.length, pos = 0; i < len; i++) {
       data[i].copy(buf, pos);
       pos += data[i].length;
     }
@@ -101,7 +101,7 @@ var req = http.get(url.parse("http://localhost/.../file.zip"), function (res) {
   });
 });
 
-req.on("error", function(err){
+req.on("error", function (err) {
   // handle error
 });
 ```
@@ -111,19 +111,22 @@ req.on("error", function(err){
 ```js
 "use strict";
 
-var request = require('request');
+var request = require("request");
 var PizZip = require("pizzip");
 
-request({
-  method : "GET",
-  url : "http://localhost/.../file.zip",
-  encoding: null // <- this one is important !
-}, function (error, response, body) {
-  if(error ||  response.statusCode !== 200) {
-    // handle error
-    return;
+request(
+  {
+    method: "GET",
+    url: "http://localhost/.../file.zip",
+    encoding: null, // <- this one is important !
+  },
+  function (error, response, body) {
+    if (error || response.statusCode !== 200) {
+      // handle error
+      return;
+    }
+    var zip = new PizZip(body);
+    console.log(zip.file("content.txt").asText());
   }
-  var zip = new PizZip(body);
-  console.log(zip.file("content.txt").asText());
-});
+);
 ```

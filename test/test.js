@@ -1130,7 +1130,7 @@ describe("PizZip", function() {
 		if (PizZip.support.nodebuffer) {
 			it("add file: file(name, Buffer)", function() {
 				function str2buffer(str) {
-					const array = new Buffer(str.length);
+					const array = Buffer.alloc(str.length);
 					for (let i = 0; i < str.length; i++) {
 						array[i] = str.charCodeAt(i);
 					}
@@ -1834,7 +1834,7 @@ describe("PizZip", function() {
 
 		if (PizZip.support.nodebuffer) {
 			testZipFile("load(Buffer) works", "ref/all.zip", function(fileAsString) {
-				const file = new Buffer(fileAsString.length);
+				const file = Buffer.alloc(fileAsString.length);
 				for (let i = 0; i < fileAsString.length; ++i) {
 					file[i] = fileAsString.charCodeAt(i);
 				}

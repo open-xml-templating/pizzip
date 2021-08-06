@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.1.1
+
+Remove usage of `new Buffer` in favor of `Buffer.from()` or `Buffer.alloc()`
+
 # v3.1.0
 
 Update pako to v2
