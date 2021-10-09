@@ -1008,6 +1008,30 @@ describe("PizZip", function () {
 			}
 		});
 
+		it("should show error if using Pizzip as first argument", function () {
+			const p = new PizZip();
+			try {
+				const zip = new PizZip(p);
+			} catch (e) {
+				assert(
+					e.message.match(
+						"Cannot read data from a pizzip instance, you probably are running new PizZip\\(zip\\) with a zipinstance"
+					),
+					"the error message should be useful"
+				);
+			}
+		});
+
+		it("should be possible to clone zip file", function () {
+			const z = new PizZip();
+			z.file("foo", "bar");
+			const u = z.clone();
+			u.file("foo", "baz");
+
+			assert.equal(z.file("foo").asText(), "bar");
+			assert.equal(u.file("foo").asText(), "baz");
+		});
+
 		it("should error if using Object as first argument", function () {
 			try {
 				const zip = new PizZip({});

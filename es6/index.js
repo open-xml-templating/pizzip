@@ -42,6 +42,13 @@ function PizZip(data, options) {
 	}
 	this.clone = function () {
 		const newObj = new PizZip();
+		Object.keys(this.files).forEach((file) => {
+			newObj.file(file, this.files[file].asUint8Array());
+		});
+		return newObj;
+	};
+	this.shallowClone = function () {
+		const newObj = new PizZip();
 		for (const i in this) {
 			if (typeof this[i] !== "function") {
 				newObj[i] = this[i];

@@ -283,6 +283,11 @@ exports.getTypeOf = function (input) {
 			"Cannot read data from a promise, you probably are running new PizZip(data) with a promise"
 		);
 	}
+	if (typeof input === "object" && typeof input.file === "function") {
+		throw new Error(
+			"Cannot read data from a pizzip instance, you probably are running new PizZip(zip) with a zipinstance"
+		);
+	}
 	if (input instanceof Date) {
 		throw new Error(
 			"Cannot read data from a Date, you probably are running new PizZip(data) with a date"

@@ -6,7 +6,9 @@ section: main
 
 # v3.1.1
 
-Remove usage of `new Buffer` in favor of `Buffer.from()` or `Buffer.alloc()`
+- Add zip.clone() function to deep clone a zip instance
+
+- Remove usage of `new Buffer` in favor of `Buffer.from()` or `Buffer.alloc()`
 
 # v3.1.0
 

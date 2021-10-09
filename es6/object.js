@@ -159,7 +159,7 @@ const out = {
 		const newFolder = folderAdd.call(this, name);
 
 		// Allow chaining by returning a new object with this folder as the root
-		const ret = this.clone();
+		const ret = this.shallowClone();
 		ret.root = newFolder.name;
 		return ret;
 	},
