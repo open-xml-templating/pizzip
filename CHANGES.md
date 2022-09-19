@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.1.2
+
+Add typescript typings
+
 # v3.1.1
 
 - Add zip.clone() function to deep clone a zip instance
