@@ -985,7 +985,7 @@ describe("PizZip", function () {
 					assert(false, "An blob was added, but no exception thrown");
 				} catch (e) {
 					assert(
-						e.message.match("unsupported format"),
+						e.message.match("Unsupported data given to new PizZip"),
 						"the error message is useful"
 					);
 				}
