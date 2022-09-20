@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.1.3
+
+Update typescript typings to work correctly.
+
 # v3.1.2
 
 Add typescript typings
