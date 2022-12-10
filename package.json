@@ -52,6 +52,7 @@
     "tsd": "^0.24.1",
     "@babel/cli": "^7.18.10",
     "@babel/core": "^7.19.1",
+    "@babel/eslint-parser": "^7.19.1",
     "@babel/plugin-proposal-object-rest-spread": "^7.18.9",
     "@babel/preset-env": "^7.19.1",
     "acorn": "^8.8.0",
@@ -67,7 +68,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "@babel/eslint-parser": "^7.19.1",
     "pako": "^2.0.4"
   },
   "license": "(MIT OR GPL-3.0)"
