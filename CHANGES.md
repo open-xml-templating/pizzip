@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.1.4
+
+Remove @babel from dependencies (moved to devDependencies)
+
 # v3.1.3
 
 Update typescript typings to work correctly.
