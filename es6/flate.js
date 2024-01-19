@@ -4,7 +4,7 @@ const USE_TYPEDARRAY =
 	typeof Uint16Array !== "undefined" &&
 	typeof Uint32Array !== "undefined";
 
-const pako = require("pako/dist/pako.es5.js");
+const pako = require("pako/dist/pako.es5.min.js");
 exports.uncompressInputType = USE_TYPEDARRAY ? "uint8array" : "array";
 exports.compressInputType = USE_TYPEDARRAY ? "uint8array" : "array";
 
