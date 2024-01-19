@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.1.5
+
+Use pako.min.js instead of pako.js
+
 # v3.1.4
 
 Remove @babel from dependencies (moved to devDependencies)
