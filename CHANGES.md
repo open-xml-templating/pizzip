@@ -4,6 +4,17 @@ layout: default
 section: main
 ---
 
+# v3.1.6
+
+Improve typescript support :
+
+Fixes following error message :
+
+```
+error TS1259: Module 'pizzip' can only be default-imported using the 'allowSyntheticDefaultImports' flag
+Error - 'tsc' sub task errored after 2.66 s
+```
+
 # v3.1.5
 
 Use pako.min.js instead of pako.js

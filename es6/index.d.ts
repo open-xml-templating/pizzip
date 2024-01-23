@@ -3,11 +3,8 @@
 
 /// <reference types="node" />
 
-export as namespace PizZip;
-
-export = PizZip;
-
 declare class PizZip {
+    static default: typeof PizZip;
     /**
      * If the browser supports them, PizZip can take advantage of some "new" features : ArrayBuffer, Blob, Uint8Array.
      * To know if PizZip can use them, you can check the PizZip.support object.
@@ -382,4 +379,6 @@ declare namespace PizZip {
         encodeFileName?(name: string): Buffer;
     }
 }
+
+export = PizZip;
 

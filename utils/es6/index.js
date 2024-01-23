@@ -26,16 +26,16 @@ function createActiveXHR() {
 // Create the request object
 const createXHR = window.ActiveXObject
 	? /* Microsoft failed to properly
-	   * implement the XMLHttpRequest in IE7 (can't request local files),
-	   * so we use the ActiveXObject when it is available
-	   * Additionally XMLHttpRequest can be disabled in IE7/IE8 so
-	   * we need a fallback.
-	   */
-	  function () {
+		 * implement the XMLHttpRequest in IE7 (can't request local files),
+		 * so we use the ActiveXObject when it is available
+		 * Additionally XMLHttpRequest can be disabled in IE7/IE8 so
+		 * we need a fallback.
+		 */
+		function () {
 			return createStandardXHR() || createActiveXHR();
-	  }
+		}
 	: // For all other browsers, use the standard XMLHttpRequest object
-	  createStandardXHR;
+		createStandardXHR;
 
 PizZipUtils.getBinaryContent = function (path, callback) {
 	/*

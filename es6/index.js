@@ -86,3 +86,4 @@ PizZip.base64 = {
 };
 PizZip.compressions = require("./compressions.js");
 module.exports = PizZip;
+module.exports.default = PizZip;
