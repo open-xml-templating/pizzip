@@ -5,7 +5,7 @@
   "description": "Create, read and edit .zip files synchronously with Javascript",
   "scripts": {
     "lint:fix": "npm run prettier:fix && npm run eslint:fix",
-    "eslint:fix": "eslint_d --cache 'es6/**/*.js' --fix",
+    "eslint:fix": "eslint --cache 'es6/**/*.js' --fix",
     "prettier:fix": "prettier --cache --write '*.js' 'es6/**/*.js' 'test/test.js' test/node.js 'utils/*.js' 'utils/es6/**/*.js'",
     "browserify:lib": "webpack",
     "babel": "babel es6 --out-dir js",
