@@ -266,19 +266,20 @@ exports.getTypeOf = function (input) {
 	if (typeof input === "string") {
 		return "string";
 	}
-	if (Object.prototype.toString.call(input) === "[object Array]") {
+	const protoResult = Object.prototype.toString.call(input);
+	if (protoResult === "[object Array]") {
 		return "array";
 	}
 	if (support.nodebuffer && nodeBuffer.test(input)) {
 		return "nodebuffer";
 	}
-	if (support.uint8array && input instanceof Uint8Array) {
+	if (support.uint8array && protoResult === "[object Uint8Array]") {
 		return "uint8array";
 	}
-	if (support.arraybuffer && input instanceof ArrayBuffer) {
+	if (support.arraybuffer && protoResult === "[object ArrayBuffer]") {
 		return "arraybuffer";
 	}
-	if (input instanceof Promise) {
+	if (protoResult === "[object Promise]") {
 		throw new Error(
 			"Cannot read data from a promise, you probably are running new PizZip(data) with a promise"
 		);
@@ -288,7 +289,7 @@ exports.getTypeOf = function (input) {
 			"Cannot read data from a pizzip instance, you probably are running new PizZip(zip) with a zipinstance"
 		);
 	}
-	if (input instanceof Date) {
+	if (protoResult === "[object Date]") {
 		throw new Error(
 			"Cannot read data from a Date, you probably are running new PizZip(data) with a date"
 		);

@@ -794,7 +794,7 @@ describe("PizZip", function () {
 					const buffer = opts.zip.file("file.txt").asArrayBuffer();
 					assert(
 						buffer instanceof ArrayBuffer,
-						opts.name + " : the result is a instance of ArrayBuffer"
+						opts.name + " : the result is an instance of ArrayBuffer"
 					);
 					const actual = PizZip.utils.transformTo("string", buffer);
 					assert.equal(actual, opts.rawData, opts.name + " : asArrayBuffer()");
@@ -815,7 +815,7 @@ describe("PizZip", function () {
 					const bufferView = opts.zip.file("file.txt").asUint8Array();
 					assert(
 						bufferView instanceof Uint8Array,
-						opts.name + " : the result is a instance of Uint8Array"
+						opts.name + " : the result is an instance of Uint8Array"
 					);
 					const actual = PizZip.utils.transformTo("string", bufferView);
 					assert.equal(actual, opts.rawData, opts.name + " : asUint8Array()");
@@ -836,7 +836,7 @@ describe("PizZip", function () {
 					const buffer = opts.zip.file("file.txt").asNodeBuffer();
 					assert(
 						buffer instanceof Buffer,
-						opts.name + " : the result is a instance of Buffer"
+						opts.name + " : the result is an instance of Buffer"
 					);
 					const actual = PizZip.utils.transformTo("string", buffer);
 					assert.equal(actual, opts.rawData, opts.name + " : .asNodeBuffer()");
@@ -1200,7 +1200,7 @@ describe("PizZip", function () {
 					const array = zip.generate({ type: "uint8array" });
 					assert(
 						array instanceof Uint8Array,
-						"The result is a instance of Uint8Array"
+						"The result is an instance of Uint8Array"
 					);
 					assert.equal(array.length, expected.length);
 
@@ -1238,7 +1238,7 @@ describe("PizZip", function () {
 					const buffer = zip.generate({ type: "arraybuffer" });
 					assert(
 						buffer instanceof ArrayBuffer,
-						"The result is a instance of ArrayBuffer"
+						"The result is an instance of ArrayBuffer"
 					);
 
 					const actual = PizZip.utils.transformTo("string", buffer);
@@ -1278,7 +1278,7 @@ describe("PizZip", function () {
 					const buffer = zip.generate({ type: "nodebuffer" });
 					assert(
 						buffer instanceof Buffer,
-						"The result is a instance of ArrayBuffer"
+						"The result is an instance of ArrayBuffer"
 					);
 
 					let actual = "";
@@ -1313,7 +1313,7 @@ describe("PizZip", function () {
 				const zip = new PizZip();
 				zip.file("Hello.txt", "Hello World\n");
 				const blob = zip.generate({ type: "blob" });
-				assert(blob instanceof Blob, "The result is a instance of Blob");
+				assert(blob instanceof Blob, "The result is an instance of Blob");
 				assert.equal(blob.type, "application/zip");
 				assert.equal(blob.size, expected.length);
 			});
@@ -1341,7 +1341,7 @@ describe("PizZip", function () {
 					type: "blob",
 					mimeType: "application/ods",
 				});
-				assert(blob instanceof Blob, "The result is a instance of Blob");
+				assert(blob instanceof Blob, "The result is an instance of Blob");
 				assert.equal(
 					blob.type,
 					"application/ods",
