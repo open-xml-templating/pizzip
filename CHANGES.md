@@ -4,6 +4,12 @@ layout: default
 section: main
 ---
 
+# v3.1.7
+
+Change ArrayBuffer check to work correctly with webworkers
+
+Fixes #36
+
 # v3.1.6
 
 Improve typescript support :
