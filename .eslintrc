@@ -9,7 +9,9 @@
     "saveAs": true,
     "Promise": true,
     "PizZipUtils": true,
-    "ArrayBuffer": true
+    "ArrayBuffer": true,
+    "equal": true,
+    "ok": true,
   },
   "env": {
     "node": true,

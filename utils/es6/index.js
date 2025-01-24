@@ -37,6 +37,13 @@ const createXHR = window.ActiveXObject
 	: // For all other browsers, use the standard XMLHttpRequest object
 		createStandardXHR;
 
+function isFileProtocol(path) {
+	return (
+		path.startsWith("file://") ||
+		(typeof window !== "undefined" && window.location.protocol === "file:")
+	);
+}
+
 PizZipUtils.getBinaryContent = function (path, callback) {
 	/*
 	 * Here is the tricky part : getting the data.
@@ -56,6 +63,7 @@ PizZipUtils.getBinaryContent = function (path, callback) {
 		const xhr = createXHR();
 
 		xhr.open("GET", path, true);
+		const isLocalFile = isFileProtocol(path);
 
 		// recent browsers
 		if ("responseType" in xhr) {
@@ -71,24 +79,21 @@ PizZipUtils.getBinaryContent = function (path, callback) {
 			let file, err;
 			// use `xhr` and not `this`... thanks IE
 			if (xhr.readyState === 4) {
-				if (xhr.status === 200 || xhr.status === 0) {
-					file = null;
-					err = null;
+				if (xhr.status === 200 || (isLocalFile && xhr.status === 0)) {
 					try {
-						file = PizZipUtils._getBinaryFromXHR(xhr);
+						const file = PizZipUtils._getBinaryFromXHR(xhr);
+						callback(null, file);
 					} catch (e) {
-						err = new Error(e);
+						callback(new Error(e), null);
 					}
-					callback(err, file);
 				} else {
+					const errorDescription =
+						xhr.status === 0
+							? "Server not responding or CORS headers missing. "
+							: "";
 					callback(
 						new Error(
-							"Ajax error for " +
-								path +
-								" : " +
-								this.status +
-								" " +
-								this.statusText
+							`Ajax error for ${path}: status ${xhr.status} ${errorDescription}${xhr.statusText}`
 						),
 						null
 					);

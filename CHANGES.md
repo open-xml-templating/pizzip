@@ -4,6 +4,16 @@ layout: default
 section: main
 ---
 
+# v3.1.8
+
+The following message was shown in PizZipUtils.getBinaryContent:
+
+InvalidStateError: Failed to read the 'responseText'
+
+This meant that the server didn't respond or that there is a CORS issue.
+
+The message is now : "Ajax error, status 0 Server not responding or CORS headers missing."
+
 # v3.1.7
 
 Change ArrayBuffer check to work correctly with webworkers
