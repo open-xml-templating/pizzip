@@ -97,3 +97,10 @@ const unit8Test: Uint8Array = zip.generate({
   type: "uint8array",
   base64: true,
 });
+
+zip.generate({
+  type: "nodebuffer",
+  fileOrder: function (files) {
+    return [];
+  },
+});

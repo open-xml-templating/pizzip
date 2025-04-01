@@ -241,8 +241,24 @@ const out = {
 			writer,
 			i;
 
-		// first, generate all the zip parts.
+		let fileNames = [];
+
+		if (options.fileOrder instanceof Array) {
+			fileNames = options.fileOrder;
+		}
+
 		for (const name in this.files) {
+			if (fileNames.indexOf(name) === -1) {
+				fileNames.push(name);
+			}
+		}
+
+		if (typeof options.fileOrder === "function") {
+			fileNames = options.fileOrder(this.files);
+		}
+
+		// first, generate all the zip parts.
+		for (const name of fileNames) {
 			if (!this.files.hasOwnProperty(name)) {
 				continue;
 			}

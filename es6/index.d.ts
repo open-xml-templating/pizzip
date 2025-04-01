@@ -371,12 +371,18 @@ declare namespace PizZip {
          */
         platform?: 'DOS' | 'UNIX' | NodeJS.Platform | undefined;
         /**
-         * the function to encode the file name / comment.
+         * The function to encode the file name / comment.
          * By default, PizZip uses UTF-8 to encode the file names / comments. You can use this method to force an other encoding.
          * Note : the encoding used is not stored in a zip file, not using UTF-8 may lead to encoding issues.
          * The function takes a string and returns a bytes array (Uint8Array or Array).
          */
         encodeFileName?(name: string): Buffer;
+
+        /**
+         * The function to change the ordering of the files in the zip archive.
+         * The function takes the files array and returns the list of files in the order that you want them to be in the final zip file.
+         */
+        fileOrder?(files: string[]) : string[];
     }
 }
 
