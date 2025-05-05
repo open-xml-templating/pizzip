@@ -23,7 +23,7 @@ exports.arrayBuffer2Blob = function (buffer, mimeType) {
 		return new Blob([buffer], {
 			type: mimeType,
 		});
-	} catch (e) {
+	} catch {
 		try {
 			// deprecated, browser only, old way
 			const Builder =
@@ -34,7 +34,7 @@ exports.arrayBuffer2Blob = function (buffer, mimeType) {
 			const builder = new Builder();
 			builder.append(buffer);
 			return builder.getBlob(mimeType);
-		} catch (e) {
+		} catch {
 			// well, fuck ?!
 			throw new Error("Bug : can't construct the Blob.");
 		}
@@ -92,7 +92,7 @@ function arrayLikeToString(array) {
 				String.fromCharCode.apply(null, nodeBuffer(0));
 				break;
 		}
-	} catch (e) {
+	} catch {
 		canUseApply = false;
 	}
 
@@ -123,7 +123,7 @@ function arrayLikeToString(array) {
 				);
 			}
 			k += chunk;
-		} catch (e) {
+		} catch {
 			chunk = Math.floor(chunk / 2);
 		}
 	}

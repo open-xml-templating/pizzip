@@ -20,7 +20,7 @@ if (typeof ArrayBuffer === "undefined") {
 			new Blob([buffer], {
 				type: "application/zip",
 			}).size === 0;
-	} catch (e) {
+	} catch {
 		try {
 			const Builder =
 				window.BlobBuilder ||
@@ -30,7 +30,7 @@ if (typeof ArrayBuffer === "undefined") {
 			const builder = new Builder();
 			builder.append(buffer);
 			exports.blob = builder.getBlob("application/zip").size === 0;
-		} catch (e) {
+		} catch {
 			exports.blob = false;
 		}
 	}
