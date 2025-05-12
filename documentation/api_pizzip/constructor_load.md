@@ -13,7 +13,7 @@ zip.load(data, options);
 
 Please see the documentation of [load]({{site.baseurl}}/documentation/api_pizzip/load.html).
 
-__Example__
+**Example**
 
 ```js
 var zip = new PizZip(data, options);

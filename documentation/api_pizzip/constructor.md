@@ -4,17 +4,17 @@ layout: default
 section: api
 ---
 
-__Description__ : Create a new PizZip instance.
+**Description** : Create a new PizZip instance.
 
-__Arguments__ : None
+**Arguments** : None
 
-__Returns__ : A new PizZip.
+**Returns** : A new PizZip.
 
-__Throws__ : Nothing.
+**Throws** : Nothing.
 
 <!-- __Complexity__ : Object creation in **O(1)**. -->
 
-__Example__
+**Example**
 
 ```js
 var zip = new PizZip();

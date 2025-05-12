@@ -18,7 +18,7 @@ With recent browsers, the easiest way is to use `saveAs` or a polyfill, see
 [FileSaver.js](https://github.com/eligrey/FileSaver.js) :
 
 ```js
-var blob = zip.generate({type:"blob"});
+var blob = zip.generate({ type: "blob" });
 saveAs(blob, "hello.zip");
 ```
 
@@ -27,14 +27,14 @@ Under the hood, the polyfill uses the native `saveAs` from the
 (on Chrome and IE10+) or use a [Blob URL](http://updates.html5rocks.com/2011/08/Downloading-resources-in-HTML5-a-download)
 (on Firefox).
 
-
 #### Data URI
 
 For older browsers that support [data URI](http://caniuse.com/datauri), you can also
 do the following :
 
 ```js
-location.href="data:application/zip;base64," + zip.generate({type:"base64"});
+location.href =
+  "data:application/zip;base64," + zip.generate({ type: "base64" });
 ```
 
 The biggest issue here is that the filenames are very awkward, Firefox
@@ -45,9 +45,9 @@ isn't much better with just `Unknown`.
 
 Browser support and resulting filename :
 
-Opera  | Firefox | Safari | Chrome | Internet Explorer
--------|---------|--------|--------|------------------
-"default.zip" | random alphanumeric with ".part" extension | "Unknown" (no extension) | "download.zip" on OSX and Linux, just "download" on Windows | No
+| Opera         | Firefox                                    | Safari                   | Chrome                                                      | Internet Explorer |
+| ------------- | ------------------------------------------ | ------------------------ | ----------------------------------------------------------- | ----------------- |
+| "default.zip" | random alphanumeric with ".part" extension | "Unknown" (no extension) | "download.zip" on OSX and Linux, just "download" on Windows | No                |
 
 #### Downloadify
 
@@ -82,8 +82,6 @@ brilliant tutorial on [using PizZip with Google Gears](http://www.picurl.org/blo
 If you want to let your Gears users download several files at once I really
 recommend having a look at some of his [examples](http://picurl.org/gears/zipper/).
 
-
-
 ### In nodejs
 
 PizZip can generate Buffers so you can do the following :
@@ -96,11 +94,9 @@ var zip = new PizZip();
 // zip.file("file", content);
 // ... and other manipulations
 
-var buffer = zip.generate({type:"nodebuffer"});
+var buffer = zip.generate({ type: "nodebuffer" });
 
-fs.writeFile("test.zip", buffer, function(err) {
+fs.writeFile("test.zip", buffer, function (err) {
   if (err) throw err;
 });
 ```
-
-

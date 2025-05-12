@@ -4,24 +4,24 @@ layout: default
 section: api
 ---
 
-__Description__ : Delete a file or folder (recursively).
+**Description** : Delete a file or folder (recursively).
 
-__Arguments__
+**Arguments**
 
-name | type   | description
------|--------|------------
-name | string | the name of the file/folder to delete.
+| name | type   | description                            |
+| ---- | ------ | -------------------------------------- |
+| name | string | the name of the file/folder to delete. |
 
-__Returns__ : The current PizZip object.
+**Returns** : The current PizZip object.
 
-__Throws__ : Nothing.
+**Throws** : Nothing.
 
 <!--
 __Complexity__ : **O(k)** where k is the number of entry to delete (may be > 1
 when removing a folder).
 -->
 
-__Example__
+**Example**
 
 ```js
 var zip = new PizZip();
@@ -33,5 +33,3 @@ zip.folder("css").file("style.css", "body {background: #FF0000}");
 zip.remove("css");
 //result : empty zip
 ```
-
-
