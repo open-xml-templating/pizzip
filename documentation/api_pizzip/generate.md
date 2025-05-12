@@ -19,6 +19,7 @@ section: api
 | options.mimeType           | string   | `application/zip`        | mime-type for the generated file. Useful when you need to generate a file with a different extension, ie: ".ods".                                |
 | options.platform           | string   | `DOS`                    | The platform to use when generating the zip file.                                                                                                |
 | options.encodeFileName     | function | encode with UTF-8        | the function to encode the file name / comment.                                                                                                  |
+| options.fileOrder          | function |                          | the function to specify the order of the files in the generated zip file.                                                                        |
 
 Possible values for `type` :
 
@@ -65,6 +66,10 @@ By default, PizZip uses UTF-8 to encode the file names / comments. You can use
 this method to force an other encoding. Note : the encoding used is not stored
 in a zip file, not using UTF-8 may lead to encoding issues.
 The function takes a string and returns a bytes array (Uint8Array or Array).
+
+**About `fileOrder`** :
+
+By default, PizZip will keep the order of the files of the input, and if you change a file, that file will be put at the end of the archive. If you need to specify the order of the zip files, you can use the `fileOrder` function and return the files in the order that you want them. All files present in the zip archive but not present in the `fileOrder` array will be put after the files in `fileOrder`.
 
 **Returns** : The generated zip file.
 

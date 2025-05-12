@@ -4,6 +4,10 @@ layout: default
 section: main
 ---
 
+# v3.2.0
+
+Add support for `fileOrder` in the `.generate()` function.
+
 # v3.1.8
 
 The following message was shown in PizZipUtils.getBinaryContent:
