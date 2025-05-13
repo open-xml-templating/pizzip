@@ -6,7 +6,7 @@
   "scripts": {
     "lint:fix": "npm run prettier:fix && npm run eslint:fix",
     "eslint:fix": "eslint --cache 'es6/**/*.js' --fix",
-    "prettier:fix": "prettier --cache --write '*.js' 'es6/**/*.js' 'test/test.js' test/node.js 'utils/*.js' 'utils/es6/**/*.js' 'documentation/*/*.md'",
+    "prettier:fix": "prettier --cache --write '*.js' 'es6/**/*.js' 'test/test.js' test/node.js 'utils/*.js' 'utils/es6/**/*.js' 'documentation/**.md'",
     "browserify:lib": "webpack",
     "babel": "babel es6 --out-dir js",
     "babel:watch": "npm run babel -- --watch",

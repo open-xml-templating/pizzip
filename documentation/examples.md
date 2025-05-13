@@ -92,9 +92,9 @@ informations on how to write / give the file to the user.
 ```js
 var content = null;
 if (PizZip.support.uint8array) {
-  content = zip.generate({type : "uint8array"});
+  content = zip.generate({ type: "uint8array" });
 } else {
-  content = zip.generate({type : "string"});
+  content = zip.generate({ type: "string" });
 }
 ```
 
@@ -112,4 +112,3 @@ new_zip.load(content);
 // you now have every files contained in the loaded zip
 new_zip.file("hello.txt").asText(); // "Hello World\n"
 ```
-

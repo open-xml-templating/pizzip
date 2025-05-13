@@ -3,7 +3,9 @@
 title: Contributing layout: default
 
 section: main
--------------
+---
+
+---
 
 ### Download the sources
 
@@ -19,10 +21,10 @@ The dependencies are handled by npm, the first step is to run `npm install` to g
 
 Here are the interesting build commands :
 
--	`grunt` will generate the final js file in dist/ and the minified version.
--	`npm run test-node` will run the tests in nodejs.
--	`npm run test-browser` will the tests in some browsers using SauceLabs, see below.
--	`npm run test` will run the tests in nodejs and in the browser.
+- `grunt` will generate the final js file in dist/ and the minified version.
+- `npm run test-node` will run the tests in nodejs.
+- `npm run test-browser` will the tests in some browsers using SauceLabs, see below.
+- `npm run test` will run the tests in nodejs and in the browser.
 
 #### Documentation
 
