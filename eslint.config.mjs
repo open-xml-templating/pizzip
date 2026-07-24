@@ -1,6 +1,5 @@
 import globals from "globals";
-import parser from "@babel/eslint-parser";
-import importPlugin from "eslint-plugin-import";
+import importPlugin from "eslint-plugin-import-x";
 // import specificSortPlugin from "eslint-plugin-specific-sort";
 // import sortClassMembers from "eslint-plugin-sort-class-members";
 // import stylisticJs from "@stylistic/eslint-plugin-js";
@@ -47,9 +46,8 @@ export default [
   {
     languageOptions: {
       parserOptions: {
-        ecmaVersion: 7,
+        ecmaVersion: 2019,
       },
-      parser,
       globals: {
         Uint8Array: true,
         saveAs: true,

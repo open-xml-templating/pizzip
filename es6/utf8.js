@@ -139,7 +139,7 @@ function buf2string(buf) {
 	//     String.fromCharCode.apply than Uint16Array.
 	let utf16buf = new Array(len * 2);
 
-	for (out = 0, i = 0; i < len; ) {
+	for (out = 0, i = 0; i < len;) {
 		c = buf[i++];
 		// quick process ascii
 		if (c < 0x80) {
