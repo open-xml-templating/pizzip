@@ -140,9 +140,15 @@ ZipEntry.prototype = {
 			compression,
 			this.uncompressedSize
 		);
+		this.decompressed._fileReader = reader;
+		this.decompressed._fileOffset = reader.zero + reader.index;
 
 		// we need to compute the crc32...
 		if (this.loadOptions.checkCRC32) {
+			if (reader.checkCRC32) {
+				reader.checkCRC32(this.decompressed);
+				return;
+			}
 			this.decompressed = utils.transformTo(
 				"string",
 				this.decompressed.getContent()
