@@ -41,13 +41,18 @@ declare class PizZip {
     constructor();
 
     /**
+     * Creates a PizZip instance with optional filesystem-backed storage.
+     */
+    constructor(data: undefined, options?: PizZip.ConstructorOptions);
+
+    /**
      * Specifying data & options is a shortcut for new PizZip().load(data, options);
      *
      * @param data the zip file
      * @param options the options to load the zip file
      */
     // tslint:disable-next-line unified-signatures new (undefined, {options}) is not an acceptable input
-    constructor(data: PizZip.LoadData, options?: PizZip.LoadOptions);
+    constructor(data: PizZip.LoadData, options?: PizZip.ConstructorOptions);
 
     /**
      * Read an existing zip and merge the data in the current PizZip object at the current folder level.
@@ -58,6 +63,16 @@ declare class PizZip {
      * @param options the options to load the zip file
      */
     load(data: PizZip.LoadData, options?: PizZip.LoadOptions): this;
+
+    /**
+     * Read an archive directly from a file without loading the complete archive into memory.
+     */
+    loadFile(file: string, options?: PizZip.LoadOptions): this;
+
+    /**
+     * Release filesystem storage and file readers associated with this instance.
+     */
+    dispose(): void;
 
     /**
      * Add (or update) a file to the zip file.
@@ -121,6 +136,9 @@ declare class PizZip {
     generate(options: PizZip.GenerateOptions & { type: 'nodebuffer' }): Buffer;
     generate(options: PizZip.GenerateOptions & { type: 'arraybuffer' }): ArrayBuffer;
     generate(options: PizZip.GenerateOptions & { type: 'uint8array' }): Uint8Array;
+    generateNodeStream(
+        options?: PizZip.GenerateNodeStreamOptions
+    ): NodeJS.ReadableStream;
 
     /**
      * Delete a file or folder (recursively).
@@ -209,6 +227,8 @@ declare namespace PizZip {
     }
 
     interface LoadOptions {
+        /** Disk checksum read size in bytes; defaults to the constructor's chunkSize. */
+        chunkSize?: number | undefined;
         /**
          * set to true if the data is base64 encoded, false for binary.
          *
@@ -241,6 +261,16 @@ declare namespace PizZip {
          * The function takes the bytes array (Uint8Array or Array) and returns the decoded string.
          */
         decodeFileName?(bytes: Uint8Array | number[]): string;
+    }
+
+    interface ConstructorOptions extends LoadOptions {
+        storage?: FilesystemStorageOptions | undefined;
+    }
+
+    interface FilesystemStorageOptions {
+        type: 'filesystem';
+        directory?: string | undefined;
+        filter?: ((name: string) => boolean) | undefined;
     }
 
     interface FileOptions {
@@ -384,7 +414,19 @@ declare namespace PizZip {
          */
         fileOrder?(files: string[]) : string[];
     }
+
+    interface GenerateNodeStreamOptions {
+        /** File-data chunk size in bytes (minimum 64); defaults to 1 MiB or the constructor setting. Not a total memory cap. */
+        chunkSize?: number | undefined;
+        compression?: Compression | undefined;
+        compressionOptions?: { level?: number | undefined } | null | undefined;
+        comment?: string | undefined;
+        fileOrder?:
+            | string[]
+            | ((files: Record<string, ZipObject>) => string[])
+            | undefined;
+        highWaterMark?: number | undefined;
+    }
 }
 
 export = PizZip;
-

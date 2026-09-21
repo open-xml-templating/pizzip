@@ -140,9 +140,21 @@ ZipEntry.prototype = {
 			compression,
 			this.uncompressedSize
 		);
+		if (reader._pizzipFileReader) {
+			if (this.compressedSize < 0 || this.uncompressedSize < 0) {
+				throw new Error("Corrupted zip : invalid entry size");
+			}
+			reader.checkOffset(this.compressedSize);
+			this.decompressed._fileReader = reader;
+			this.decompressed._fileOffset = reader.zero + reader.index;
+		}
 
 		// we need to compute the crc32...
 		if (this.loadOptions.checkCRC32) {
+			if (reader.checkCRC32) {
+				reader.checkCRC32(this.decompressed);
+				return;
+			}
 			this.decompressed = utils.transformTo(
 				"string",
 				this.decompressed.getContent()

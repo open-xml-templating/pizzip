@@ -285,6 +285,10 @@ ZipEntries.prototype = {
 		}
 	},
 	prepareReader(data) {
+		if (data && data._pizzipFileReader) {
+			this.reader = data;
+			return;
+		}
 		const type = utils.getTypeOf(data);
 		utils.checkSupport(type);
 		if (type === "string" && !support.uint8array) {

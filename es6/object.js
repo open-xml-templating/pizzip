@@ -11,6 +11,7 @@ const nodeBuffer = require("./nodeBuffer.js");
 const utf8 = require("./utf8.js");
 const StringWriter = require("./stringWriter.js");
 const Uint8ArrayWriter = require("./uint8ArrayWriter.js");
+const fileOrder = require("./file-order.js");
 
 /**
  * Returns the raw data of a ZipObject, decompress the content if necessary.
@@ -18,6 +19,9 @@ const Uint8ArrayWriter = require("./uint8ArrayWriter.js");
  * @return {String|ArrayBuffer|Uint8Array|Buffer} the data.
  */
 function getRawData(file) {
+	if (file._data && file._data._pizzipDiskData) {
+		return file._data.getContent();
+	}
 	if (file._data instanceof CompressedObject) {
 		file._data = file._data.getContent();
 		file.options.binary = true;
@@ -241,21 +245,7 @@ const out = {
 			writer,
 			i;
 
-		let fileNames = [];
-
-		if (options.fileOrder instanceof Array) {
-			fileNames = options.fileOrder;
-		}
-
-		for (const name in this.files) {
-			if (fileNames.indexOf(name) === -1) {
-				fileNames.push(name);
-			}
-		}
-
-		if (typeof options.fileOrder === "function") {
-			fileNames = options.fileOrder(this.files);
-		}
+		const fileNames = fileOrder(this.files, options.fileOrder);
 
 		// first, generate all the zip parts.
 		for (const name of fileNames) {
@@ -521,11 +511,51 @@ function prepareFileAttrs(o) {
 	}
 	o = utils.extend(o, defaults);
 	o.date = o.date || new Date();
-	if (o.compression !== null) {
+	if (typeof o.compression === "string") {
 		o.compression = o.compression.toUpperCase();
+	} else {
+		o.compression = null;
 	}
 
 	return o;
+}
+
+function copyCompressed(source) {
+	const copy = new Uint8Array(
+		utils.transformTo("uint8array", source.getCompressedContent())
+	);
+	return CompressedObject.from(source, function () {
+		return copy;
+	});
+}
+
+function persistData(storage, name, data, o) {
+	if (data instanceof CompressedObject) {
+		if (storage.shouldStore(name)) {
+			return data._fileReader
+				? storage.compressedFromReader(data)
+				: storage.compressed(data.getCompressedContent(), data);
+		}
+		if (!data._fileReader) {
+			return copyCompressed(data);
+		}
+		return data;
+	}
+	if (!storage.shouldStore(name)) {
+		return data;
+	}
+	let storageEncoding = "utf-8";
+	if (typeof data === "string") {
+		if (o.base64) {
+			data = base64.decode(data);
+			storageEncoding = "binary";
+		} else if (o.binary) {
+			storageEncoding = "binary";
+		}
+	}
+	o.base64 = false;
+	o.binary = true;
+	return storage.write(data, typeof data === "string" ? storageEncoding : null);
 }
 
 /**
@@ -583,7 +613,11 @@ function fileAdd(name, data, o) {
 		o.base64 = false;
 		o.binary = true;
 
-		if (!dataType && !(data instanceof CompressedObject)) {
+		if (
+			!dataType &&
+			!(data instanceof CompressedObject) &&
+			!(data && data._pizzipDiskData)
+		) {
 			throw new Error(
 				"The data of '" + name + "' is in an unsupported format !"
 			);
@@ -593,6 +627,9 @@ function fileAdd(name, data, o) {
 		if (dataType === "arraybuffer") {
 			data = utils.transformTo("uint8array", data);
 		}
+	}
+	if (this._storage && data !== null) {
+		data = persistData(this._storage, name, data, o);
 	}
 
 	const object = new ZipObject(name, data, o);

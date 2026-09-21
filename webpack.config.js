@@ -8,6 +8,7 @@ const entry = "./es6/index.js";
 
 module.exports = {
 	entry,
+	target: "web",
 	output: {
 		path: outputPath,
 		filename: outputFilename,

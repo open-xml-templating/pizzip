@@ -3,6 +3,15 @@ import { expectType, expectError } from "tsd";
 import * as fs from "fs";
 
 const zip1 = new PizZip();
+const diskZip = new PizZip(undefined, {
+  chunkSize: 1024 * 1024,
+  storage: {
+    type: "filesystem",
+    filter: (name) => name.endsWith(".bin"),
+  },
+});
+diskZip.loadFile("content.zip").dispose();
+expectType<NodeJS.ReadableStream>(diskZip.generateNodeStream({ chunkSize: 64 * 1024 }));
 
 zip1.file(
   "smile.gif",
@@ -75,6 +84,7 @@ if (file) {
 }
 
 const noOptionsTest: string = zip.generate();
+expectType<NodeJS.ReadableStream>(zip.generateNodeStream());
 const noTypeTest: string = zip.generate({ base64: true });
 const b64Test: string = zip.generate({
   type: "base64",

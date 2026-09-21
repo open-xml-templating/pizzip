@@ -4,6 +4,18 @@ layout: default
 section: main
 ---
 
+# v3.3.0
+
+- Add generateNodeStream() for streaming ZIP generation in Node.js, with backpressure support, STORE and DEFLATE compression, and fileOrder.
+- Add loadFile() to load ZIP archives directly from disk, including support for filesystem-backed storage via storage: { type: "filesystem" }.
+- Process filesystem-backed entry data incrementally during loading, compression, checksum validation, and streaming generation.
+- Add a chunkSize option, defaulting to 1 MiB, to control the amount of file data buffered at a time. chunkSize is not a global or total memory limit.
+- Add dispose() to release open file readers and temporary filesystem storage.
+- Add TypeScript declarations and documentation for the new APIs.
+- generateNodeStream(), loadFile(), and filesystem-backed storage are Node.js-only. The browser build (dist/pizzip.js) continues to use the in-memory load() and generate() APIs.
+
+Streaming generation supports classic ZIP archives and rejects sizes, offsets, and entry counts that require ZIP64. Synchronous `generate()` and extraction helpers still return complete in-memory results.
+
 # v3.2.0
 
 Add support for `fileOrder` in the `.generate()` function.

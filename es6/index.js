@@ -34,11 +34,34 @@ function PizZip(data, options) {
 	this.files = {};
 
 	this.comment = null;
+	this._chunkSize = require("./chunk-size.js")(options && options.chunkSize);
+	this._storage = null;
+	this._readers = new Set();
+	if (options && options.storage && options.storage.type === "filesystem") {
+		this._storage = new (require("./filesystem-storage.js"))({
+			...options.storage,
+			chunkSize: this._chunkSize,
+		});
+	}
+	this.dispose = function () {
+		for (const reader of this._readers) {
+			reader.dispose();
+		}
+		this._readers.clear();
+		if (this._storage) {
+			this._storage.dispose();
+		}
+	};
 
 	// Where we are in the hierarchy
 	this.root = "";
 	if (data) {
-		this.load(data, options);
+		try {
+			this.load(data, options);
+		} catch (error) {
+			this.dispose();
+			throw error;
+		}
 	}
 	this.clone = function () {
 		const newObj = new PizZip();
@@ -59,6 +82,7 @@ function PizZip(data, options) {
 }
 PizZip.prototype = require("./object.js");
 PizZip.prototype.load = require("./load.js");
+PizZip.prototype.loadFile = require("./loadFile.js");
 PizZip.support = require("./support.js");
 PizZip.defaults = require("./defaults.js");
 
@@ -85,5 +109,6 @@ PizZip.base64 = {
 	},
 };
 PizZip.compressions = require("./compressions.js");
+PizZip.prototype.generateNodeStream = require("./node-stream.js");
 module.exports = PizZip;
 module.exports.default = PizZip;

@@ -39,6 +39,16 @@
     }
   ],
   "main": "./js/index.js",
+  "browser": {
+    "./es6/node-stream.js": "./es6/node-stream-browser.js",
+    "./es6/loadFile.js": "./es6/loadFile-browser.js",
+    "./es6/filesystem-storage.js": "./es6/filesystem-storage-browser.js",
+    "./es6/fileReader.js": "./es6/fileReader-browser.js",
+    "./js/node-stream.js": "./js/node-stream-browser.js",
+    "./js/loadFile.js": "./js/loadFile-browser.js",
+    "./js/filesystem-storage.js": "./js/filesystem-storage-browser.js",
+    "./js/fileReader.js": "./js/fileReader-browser.js"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/open-xml-templating/pizzip"

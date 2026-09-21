@@ -12,6 +12,7 @@ const PizZipTestUtils = {
 		fs.readFile(path.resolve("test", name), "binary", callback);
 	},
 };
+require("./node-stream.js");
 describe("PizZip", function () {
 	// var PizZip = require('../lib');
 	function similar(actual, expected, mistakes) {
@@ -83,6 +84,390 @@ describe("PizZip", function () {
 			zipNoNew instanceof PizZip,
 			"Constructor adds `new` before itself where necessary"
 		);
+	});
+
+	describe("filesystem storage", function () {
+		const storageDirectory = path.resolve(".test-storage");
+
+		afterEach(function () {
+			fs.rmSync(storageDirectory, { recursive: true, force: true });
+		});
+
+		it("spools loaded and added entries and removes its backing files", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("existing.txt", "existing content");
+			const zip = new PizZip(source.generate({ type: "nodebuffer" }), {
+				storage: { type: "filesystem", directory: storageDirectory },
+			});
+			zip.file("added.txt", "added content cafe \u00e9");
+
+			assert.strictEqual(zip.file("existing.txt").asText(), "existing content");
+			assert.strictEqual(
+				zip.file("added.txt").asText(),
+				"added content cafe \u00e9"
+			);
+			assert.strictEqual(zip.files["added.txt"]._data.size, 21);
+			assert.strictEqual(fs.readdirSync(storageDirectory).length, 1);
+
+			const reloaded = new PizZip(zip.generate({ type: "nodebuffer" }));
+			assert.strictEqual(
+				reloaded.file("existing.txt").asText(),
+				"existing content"
+			);
+			assert.strictEqual(
+				reloaded.file("added.txt").asText(),
+				"added content cafe \u00e9"
+			);
+			zip.dispose();
+			assert.strictEqual(fs.readdirSync(storageDirectory).length, 0);
+		});
+
+		it("can spool only media entries", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("word/document.xml", "document", { compression: "STORE" });
+			source.file("word/media/image1.bin", "image", { compression: "STORE" });
+			const zip = new PizZip(source.generate({ type: "nodebuffer" }), {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			});
+			assert.strictEqual(zip._storage.size, 5);
+			zip.file("word/document.xml", "updated document");
+			zip.file("word/media/image2.bin", "image");
+			assert.strictEqual(zip._storage.size, 10);
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 10);
+			zip.dispose();
+		});
+
+		it("writes matching zip.file() data into the entries file", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const zipOptions = {
+				compression(name) {
+					return name.startsWith("word/media/") ? "STORE" : "DEFLATE";
+				},
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			};
+			const zip = new PizZip(undefined, zipOptions);
+			const imageData = Buffer.alloc(2048, 7);
+
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 0);
+			zip.file("image.png", imageData, zipOptions);
+			assert.strictEqual(zip._storage.size, 0);
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 0);
+			assert.ok(Buffer.isBuffer(zip.files["image.png"]._data));
+
+			zip.file("word/media/image.png", imageData, zipOptions);
+			assert.strictEqual(zip._storage.size, 2048);
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 2048);
+			assert.strictEqual(zip.files["word/media/image.png"]._data.size, 2048);
+			zip.dispose();
+		});
+
+		it("copies loadFile media into entries and keeps other files in the source", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("word/document.xml", "document");
+			source.file("word/media/image1.bin", Buffer.alloc(32, 1));
+			const archive = path.join(storageDirectory, "template.docx");
+			fs.writeFileSync(
+				archive,
+				source.generate({ type: "nodebuffer", compression: "STORE" })
+			);
+
+			const zipOptions = {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			};
+			const zip = new PizZip(undefined, zipOptions);
+			zip.loadFile(archive);
+			assert.strictEqual(zip._storage.size, 32);
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 32);
+			assert.strictEqual(
+				zip.files["word/media/image1.bin"]._data._fileReader,
+				zip._storage
+			);
+			assert.notStrictEqual(
+				zip.files["word/document.xml"]._data._fileReader,
+				zip._storage
+			);
+			assert.strictEqual(zip.file("word/document.xml").asText(), "document");
+
+			const imageData = Buffer.alloc(64, 2);
+			zip.file("word/media/image2.bin", imageData, zipOptions);
+			assert.strictEqual(zip._storage.size, 96);
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 96);
+			assert.deepEqual(
+				zip.file("word/media/image1.bin").asNodeBuffer(),
+				Buffer.alloc(32, 1)
+			);
+			assert.deepEqual(
+				zip.file("word/media/image2.bin").asNodeBuffer(),
+				Buffer.alloc(64, 2)
+			);
+			zip.dispose();
+		});
+
+		it("calls the filter, writes added buffers to disk, and drops them from the zip", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const names = [];
+			const source = new PizZip();
+			source.file("word/document.xml", "<w:document/>", {
+				compression: "STORE",
+			});
+			source.file("word/media/old.bin", Buffer.alloc(16, 1), {
+				compression: "STORE",
+			});
+			const existing = source.generate({
+				type: "nodebuffer",
+				compression: "STORE",
+			});
+
+			const zip = new PizZip(existing, {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter(name) {
+						names.push(name);
+						return name.startsWith("word/media/");
+					},
+				},
+			});
+
+			assert.ok(names.includes("word/document.xml"));
+			assert.ok(names.includes("word/media/old.bin"));
+			assert.ok(zip.files["word/media/old.bin"]._data.getCompressedContent);
+			assert.strictEqual(
+				zip.files["word/media/old.bin"]._data._fileReader,
+				zip._storage
+			);
+			assert.ok(!zip.files["word/document.xml"]._data.storage);
+			assert.ok(!zip.files["word/document.xml"]._data._fileReader);
+
+			const added = Buffer.alloc(128, 9);
+			const beforeAdd = names.length;
+			zip.file("word/media/new.bin", added);
+			assert.ok(names.slice(beforeAdd).includes("word/media/new.bin"));
+
+			const stored = zip.files["word/media/new.bin"]._data;
+			assert.notStrictEqual(stored, added);
+			assert.ok(stored.storage);
+			assert.strictEqual(stored.size, 128);
+			assert.ok(!Buffer.isBuffer(stored));
+			assert.strictEqual(fs.statSync(zip._storage.file).size, 16 + 128);
+
+			added.fill(0);
+			assert.deepEqual(
+				zip.file("word/media/new.bin").asNodeBuffer(),
+				Buffer.alloc(128, 9)
+			);
+
+			existing.fill(0);
+			assert.strictEqual(
+				zip.file("word/document.xml").asText(),
+				"<w:document/>"
+			);
+			assert.deepEqual(
+				zip.file("word/media/old.bin").asNodeBuffer(),
+				Buffer.alloc(16, 1)
+			);
+
+			const reloaded = new PizZip(zip.generate({ type: "nodebuffer" }), {
+				checkCRC32: true,
+			});
+			assert.strictEqual(
+				reloaded.file("word/document.xml").asText(),
+				"<w:document/>"
+			);
+			assert.deepEqual(
+				reloaded.file("word/media/old.bin").asNodeBuffer(),
+				Buffer.alloc(16, 1)
+			);
+			assert.deepEqual(
+				reloaded.file("word/media/new.bin").asNodeBuffer(),
+				Buffer.alloc(128, 9)
+			);
+			zip.dispose();
+		});
+
+		it("drops Buffer, Uint8Array and ArrayBuffer contents after zip.file()", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const zip = new PizZip(undefined, {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			});
+
+			const nodeBuffer = Buffer.from("buffer-bytes");
+			const typed = new Uint8Array([1, 2, 3, 4, 5]);
+			const arrayBuffer = new Uint8Array([9, 8, 7, 6]).buffer;
+			zip.file("word/media/a.bin", nodeBuffer);
+			zip.file("word/media/b.bin", typed);
+			zip.file("word/media/c.bin", arrayBuffer);
+			zip.file("word/document.xml", Buffer.from("<w:document/>"));
+
+			assert.ok(zip.files["word/media/a.bin"]._data.storage);
+			assert.ok(zip.files["word/media/b.bin"]._data.storage);
+			assert.ok(zip.files["word/media/c.bin"]._data.storage);
+			assert.ok(Buffer.isBuffer(zip.files["word/document.xml"]._data));
+
+			nodeBuffer.fill(0);
+			typed.fill(0);
+			new Uint8Array(arrayBuffer).fill(0);
+
+			assert.strictEqual(zip.file("word/media/a.bin").asText(), "buffer-bytes");
+			assert.deepEqual(
+				zip.file("word/media/b.bin").asUint8Array(),
+				new Uint8Array([1, 2, 3, 4, 5])
+			);
+			assert.deepEqual(
+				zip.file("word/media/c.bin").asUint8Array(),
+				new Uint8Array([9, 8, 7, 6])
+			);
+			assert.strictEqual(
+				zip.file("word/document.xml").asText(),
+				"<w:document/>"
+			);
+			zip.dispose();
+		});
+
+		it("replaces loaded media with a new buffer on disk", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("word/media/image.bin", Buffer.alloc(8, 1));
+			const zip = new PizZip(source.generate({ type: "nodebuffer" }), {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			});
+			const replacement = Buffer.alloc(24, 2);
+			zip.file("word/media/image.bin", replacement);
+			assert.ok(zip.files["word/media/image.bin"]._data.storage);
+			assert.strictEqual(zip.files["word/media/image.bin"]._data.size, 24);
+			replacement.fill(0);
+			assert.deepEqual(
+				zip.file("word/media/image.bin").asNodeBuffer(),
+				Buffer.alloc(24, 2)
+			);
+			zip.dispose();
+		});
+
+		it("keeps filtered DEFLATE entries readable after the source buffer is discarded", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("word/document.xml", "<w:document>hello</w:document>");
+			source.file("word/media/photo.bin", Buffer.alloc(64, 3));
+			const existing = source.generate({
+				type: "nodebuffer",
+				compression: "DEFLATE",
+			});
+			const zip = new PizZip(existing, {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter: (name) => name.startsWith("word/media/"),
+				},
+			});
+			zip.file("word/media/extra.bin", Buffer.alloc(32, 4));
+			existing.fill(0);
+			assert.strictEqual(
+				zip.file("word/document.xml").asText(),
+				"<w:document>hello</w:document>"
+			);
+			assert.deepEqual(
+				zip.file("word/media/photo.bin").asNodeBuffer(),
+				Buffer.alloc(64, 3)
+			);
+			assert.deepEqual(
+				zip.file("word/media/extra.bin").asNodeBuffer(),
+				Buffer.alloc(32, 4)
+			);
+			zip.dispose();
+		});
+
+		it("cleans up storage after an initial load error", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+
+			assert.throws(
+				() =>
+					new PizZip(Buffer.from("not a ZIP archive"), {
+						storage: { type: "filesystem", directory: storageDirectory },
+					}),
+				/zip/i
+			);
+
+			assert.strictEqual(fs.readdirSync(storageDirectory).length, 0);
+		});
+
+		it("closes every reader loaded from disk", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const firstArchive = path.join(storageDirectory, "first.zip");
+			const secondArchive = path.join(storageDirectory, "second.zip");
+			const first = new PizZip();
+			const second = new PizZip();
+			first.file("first.txt", "first");
+			second.file("second.txt", "second");
+			fs.writeFileSync(firstArchive, first.generate({ type: "nodebuffer" }));
+			fs.writeFileSync(secondArchive, second.generate({ type: "nodebuffer" }));
+
+			const zip = new PizZip().loadFile(firstArchive).loadFile(secondArchive);
+			assert.strictEqual(zip.file("first.txt").asText(), "first");
+			assert.strictEqual(zip.file("second.txt").asText(), "second");
+
+			const readers = [...zip._readers];
+			zip.dispose();
+			assert.strictEqual(
+				readers.every((reader) => reader.closed),
+				true
+			);
+			assert.doesNotThrow(() => zip.dispose());
+		});
+
+		it("does not keep entries if loadFile fails after merging some files", function () {
+			fs.mkdirSync(storageDirectory, { recursive: true });
+			const source = new PizZip();
+			source.file("first.txt", "first");
+			source.file("second.txt", "second");
+			const archive = path.join(storageDirectory, "input.zip");
+			fs.writeFileSync(archive, source.generate({ type: "nodebuffer" }));
+
+			const zip = new PizZip(undefined, {
+				storage: {
+					type: "filesystem",
+					directory: storageDirectory,
+					filter(name) {
+						if (name === "second.txt") {
+							throw new Error("stop after first entry");
+						}
+						return true;
+					},
+				},
+			});
+			zip.file("kept.txt", "kept");
+			zip.comment = "keep me";
+
+			assert.throws(() => zip.loadFile(archive), /stop after first entry/);
+			assert.strictEqual(zip._readers.size, 0);
+			assert.strictEqual(zip.file("kept.txt").asText(), "kept");
+			assert.strictEqual(zip.file("first.txt"), null);
+			assert.strictEqual(zip.file("second.txt"), null);
+			assert.strictEqual(zip.comment, "keep me");
+			zip.dispose();
+		});
 	});
 
 	describe("Essential", function () {

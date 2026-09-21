@@ -100,3 +100,44 @@ fs.writeFile("test.zip", buffer, function (err) {
   if (err) throw err;
 });
 ```
+
+#### Streaming to an Express response
+
+In Node.js, use `generateNodeStream()` when you want to send the archive
+directly to an Express response without first creating the complete ZIP in
+memory. Set the response headers before starting the stream, then use
+[`pipeline`](https://nodejs.org/api/stream.html#streampipelinestreams-options)
+to handle backpressure and stream errors:
+
+```js
+const express = require("express");
+const { pipeline } = require("node:stream/promises");
+const PizZip = require("pizzip");
+
+const app = express();
+
+app.get("/download", async (req, res, next) => {
+  const zip = new PizZip();
+  zip.file("Hello.txt", "Hello World\n");
+
+  res.set({
+    "Content-Type": "application/zip",
+    "Content-Disposition": 'attachment; filename="example.zip"',
+  });
+
+  try {
+    await pipeline(zip.generateNodeStream({ compression: "DEFLATE" }), res);
+  } catch (error) {
+    next(error);
+  } finally {
+    zip.dispose();
+  }
+});
+
+app.listen(3000);
+```
+
+`pipeline()` ends the Express response when generation completes. If the
+client disconnects or generation fails, Express can handle the error through
+`next(error)`. For disk-backed archives, keep the source available until the
+pipeline finishes and call `dispose()` as shown above.
